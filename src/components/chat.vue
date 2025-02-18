@@ -16,13 +16,15 @@
     </div>
     <!-- 消息输入区域 -->
     <div class="input-container">
-      <input
+      <!--  第二个vuetify组件更新  -->
+      <v-text-field
+          append-icon="mdi-map-marker"
+          variant="outlined"
           v-model="inputText"
-          class="input"
-          placeholder="请输入消息"
+          label="发送消息"
           @keyup.enter="sendMessage"
           :disabled="isLoading"
-      />
+      ></v-text-field>
       <!--  第一个vuetify组件更新  -->
       <v-btn color="primary" @click="sendMessage" :disabled="isLoading" class="left-4">发送</v-btn>
     </div>
@@ -163,18 +165,6 @@ pre {
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  font-size: 14px;
-}
-
-/* 发送按钮样式 */
-.send-button {
-  margin-left: 10px;
-  padding: 10px 20px;
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
   font-size: 14px;
 }
 

@@ -23,7 +23,8 @@
           @keyup.enter="sendMessage"
           :disabled="isLoading"
       />
-      <button class="send-button" @click="sendMessage" :disabled="isLoading">发送</button>
+      <!--  第一个vuetify组件更新  -->
+      <v-btn color="primary" @click="sendMessage" :disabled="isLoading" class="left-4">发送</v-btn>
     </div>
   </div>
 </template>

@@ -1,3 +1,4 @@
+// 聊天消息显示组件：负责渲染和管理聊天消息列表
 <template>
   <!-- 聊天记录显示区域，使用ref获取DOM元素用于滚动控制 -->
   <div class="chat-log" ref="chatLogRef">
@@ -19,10 +20,11 @@ import { useChatStore } from '../store/chatStore'
 
 // 组件状态管理
 const chatLogRef = ref<HTMLElement | null>(null) // 聊天记录容器引用
-const chatStore = useChatStore()
-const { messages: chatMessages } = storeToRefs(chatStore)
+const chatStore = useChatStore() // 初始化聊天状态管理store
+const { messages: chatMessages } = storeToRefs(chatStore) // 获取聊天消息列表
 
-// 滚动到聊天记录底部
+// 滚动到聊天记录底部的方法
+// 使用nextTick确保DOM更新后再执行滚动
 const scrollToBottom = () => {
   nextTick(() => {
     if (chatLogRef.value) {

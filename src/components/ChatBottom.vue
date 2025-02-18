@@ -1,3 +1,4 @@
+// 聊天输入组件：负责用户消息的输入和发送功能
 <template>
   <!-- 消息输入区域 -->
   <div class="input-container">
@@ -19,47 +20,52 @@ import { useChatStore } from '../store/chatStore'
 import { sendChatMessage } from '../services/chat'
 
 // 组件状态管理
-const inputText = ref('') // 输入框文本
-const chatStore = useChatStore()
-const { messages: chatMessages, isLoading } = storeToRefs(chatStore)
-const { addMessage } = chatStore
+const inputText = ref('') // 输入框文本状态
+const chatStore = useChatStore() // 初始化聊天状态管理store
+const { messages: chatMessages, isLoading } = storeToRefs(chatStore) // 解构获取消息列表和加载状态
+const { addMessage } = chatStore // 获取添加消息方法
 
 // 发送消息处理函数
+// 处理用户消息发送，包括：
+// 1. 消息验证
+// 2. 更新UI状态
+// 3. 发送消息到服务器
+// 4. 处理AI回复
 const sendMessage = async () => {
   const message = inputText.value.trim()
   if (!message || isLoading.value) return
 
-  chatStore.setLoading(true)
+  chatStore.setLoading(true) // 设置加载状态
   // 添加用户消息到聊天记录
   addMessage({
     role: 'user',
     content: message
   })
-  inputText.value = ''
-  emit('scroll')
+  inputText.value = '' // 清空输入框
+  emit('scroll') // 触发滚动事件
 
   try {
-    // 发送消息到服务器并获取回复
+    // 发送消息到服务器并获取AI回复
     const reply = await sendChatMessage(chatMessages.value)
     // 添加AI回复到聊天记录
     addMessage({
       role: 'assistant',
       content: reply
     })
-    emit('scroll')
+    emit('scroll') // 收到回复后再次触发滚动
   } catch (error) {
-    // 错误处理
+    // 错误处理：显示错误提示消息
     addMessage({
       role: 'assistant',
       content: '请求失败，请稍后再试'
     })
   } finally {
-    chatStore.setLoading(false)
+    chatStore.setLoading(false) // 重置加载状态
   }
 }
 
-// 定义事件
-const emit = defineEmits(['scroll'])
+// 定义组件事件
+const emit = defineEmits(['scroll']) // 定义scroll事件用于通知父组件进行滚动
 </script>
 
 <style scoped>

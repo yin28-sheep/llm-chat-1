@@ -65,10 +65,9 @@ const sendMessage = async () => {
   inputText.value = ''
 
   try {
-    const response = await fetch('https://maas-api.cn-huabei-1.xf-yun.com/v1/chat/completions', {
+    const response = await fetch('/api/v1/chat/completions', {
       method: 'POST',
       headers: {
-        'Authorization': 'sk-4et9jiY6FXWulZNX94295c643b52446bA3A04370C9412c44',
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({

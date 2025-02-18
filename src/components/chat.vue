@@ -3,10 +3,12 @@
   <div class="container">
     <!-- 标题 -->
     <h1>DeepSeek-V3</h1>
+    
     <!-- 聊天消息组件 -->
     <chat-message ref="messageRef" />
     <!-- 底部输入组件 -->
     <chat-bottom @scroll="handleScroll" />
+
   </div>
 </template>
 

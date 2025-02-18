@@ -1,30 +1,22 @@
 <template>
   <div class="history-list">
-    <div v-for="(message, index) in chatMessages" 
-         :key="index"
+    <div v-for="session in chatSessions" 
+         :key="session.id"
          class="history-item"
-         :class="{ 'active': currentMessageIndex === index }"
-         @click="selectMessage(index)">
-      <span class="message-preview">{{ getMessagePreview(message.content) }}</span>
-      <span class="message-time">{{ message.role === 'user' ? '我' : 'AI' }}</span>
+         :class="{ 'active': currentSessionId === session.id }"
+         @click="selectSession(session.id)">
+      <span class="message-preview">{{ session.name }}</span>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-import { useChatStore } from '../store/chatStore'
+import { storeToRefs } from 'pinia'
+import { useCreateMessageStore } from '../store/CreateMessageStore'
 
-const { messages: chatMessages } = useChatStore()
-const currentMessageIndex = ref(-1)
-
-const selectMessage = (index: number) => {
-  currentMessageIndex.value = index
-}
-
-const getMessagePreview = (content: string) => {
-  return content.length > 30 ? content.substring(0, 30) + '...' : content
-}
+const store = useCreateMessageStore()
+const { chatSessions, currentSessionId } = storeToRefs(store)
+const { selectSession } = store
 </script>
 
 <style scoped>
@@ -57,11 +49,5 @@ const getMessagePreview = (content: string) => {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-}
-
-.message-time {
-  font-size: 12px;
-  color: #666;
-  margin-left: 10px;
 }
 </style>

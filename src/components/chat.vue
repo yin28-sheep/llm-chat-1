@@ -116,6 +116,7 @@ h1 {
   flex-direction: column;
   gap: 12px;
   overflow-y: auto;
+  margin-bottom: 10px;
 }
 
 /* 消息气泡通用样式 */
@@ -149,6 +150,10 @@ pre {
 .input-container {
   display: flex;
   align-items: center;
+  padding: 20px;
+  border-top: 1px solid #eee;
+  background-color: #fff;
+  flex-shrink: 0;
 }
 
 /* 输入框样式 */
@@ -157,6 +162,7 @@ pre {
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
+  font-size: 14px;
 }
 
 /* 发送按钮样式 */
@@ -168,6 +174,7 @@ pre {
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  font-size: 14px;
 }
 
 /* 禁用状态样式 */

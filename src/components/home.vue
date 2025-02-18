@@ -20,14 +20,19 @@ import Sidebar from './SideBar.vue'
 /* 主容器样式，采用flex布局 */
 .home-container {
   display: flex;
-  width: 100%;
+  width: 100vw;
   height: 100vh;
   background-color: #f5f5f5;
+  position: fixed;
+  top: 0;
+  left: 0;
+  overflow: hidden;
 }
 
 /* 右侧聊天界面容器样式 */
 .chat-container {
   flex: 1;
   display: flex;
+  overflow: hidden;
 }
 </style>

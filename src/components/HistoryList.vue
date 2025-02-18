@@ -13,7 +13,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useChatStore } from '../store/chat'
+import { useChatStore } from '../store/chatStore'
 
 const { messages: chatMessages } = useChatStore()
 const currentMessageIndex = ref(-1)

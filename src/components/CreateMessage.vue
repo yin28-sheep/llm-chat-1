@@ -8,7 +8,7 @@
 </template>
 
 <script setup lang="ts">
-import { useChatStore } from '../store/chat'
+import { useChatStore } from '../store/chatStore'
 
 const { clearMessages } = useChatStore()
 

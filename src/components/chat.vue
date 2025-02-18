@@ -16,35 +16,23 @@
           class="input"
           placeholder="请输入消息"
           @keyup.enter="sendMessage"
+          :disabled="isLoading"
       />
-      <button class="send-button" @click="sendMessage">发送</button>
+      <button class="send-button" @click="sendMessage" :disabled="isLoading">发送</button>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref, nextTick } from 'vue'
-
-interface Message {
-  role: 'user' | 'assistant'
-  content: string
-}
-
-interface ChatGPTResponse {
-  choices: {
-    message: {
-      content: string
-    }
-  }[]
-}
+import { useChatStore } from '../store/chat'
+import { sendChatMessage } from '../services/chat'
 
 const inputText = ref('')
-const chatMessages = ref<Message[]>([])
 const chatLogRef = ref<HTMLElement | null>(null)
-const isLoading = ref(false)
+const { messages: chatMessages, isLoading, addMessage } = useChatStore()
 
-const addMessage = (message: Message) => {
-  chatMessages.value.push(message)
+const scrollToBottom = () => {
   nextTick(() => {
     if (chatLogRef.value) {
       chatLogRef.value.scrollTop = chatLogRef.value.scrollHeight
@@ -63,35 +51,17 @@ const sendMessage = async () => {
     content: message
   })
   inputText.value = ''
+  scrollToBottom()
 
   try {
-    const response = await fetch('/api/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        model: "xdeepseekv3",
-        messages: chatMessages.value.map(m => ({
-          role: m.role,
-          content: m.content
-        }))
-      })
-    })
-
-    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`)
-
-    const data: ChatGPTResponse = await response.json()
-    const reply = data.choices[0].message.content
-
+    const reply = await sendChatMessage(chatMessages.value)
     // 添加AI回复
     addMessage({
       role: 'assistant',
       content: reply
     })
-
+    scrollToBottom()
   } catch (error) {
-    console.error('请求失败:', error)
     addMessage({
       role: 'assistant',
       content: '请求失败，请稍后再试'
@@ -103,7 +73,6 @@ const sendMessage = async () => {
 </script>
 
 <style scoped>
-/* 保持原有样式不变 */
 body {
   font-family: Arial, sans-serif;
   background-color: #f5f5f5;
@@ -178,9 +147,13 @@ pre {
   cursor: pointer;
 }
 
-/* 修改发送按钮禁用状态 */
 .send-button:disabled {
   opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.input:disabled {
+  background-color: #f5f5f5;
   cursor: not-allowed;
 }
 </style>

@@ -12,7 +12,7 @@
 
 <script setup lang="ts">
 // 导入聊天组件和侧边栏组件
-import Chat from './chat.vue'
+import Chat from './Chat.vue'
 import Sidebar from './SideBar.vue'
 </script>
 

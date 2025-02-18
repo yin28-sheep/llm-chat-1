@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h1>DeepSeek-R1</h1>
+    <h1>DeepSeek-V3</h1>
     <div class="chat-log" ref="chatLogRef">
       <div
           v-for="(message, index) in chatMessages"
@@ -63,14 +63,14 @@ const sendMessage = async () => {
   inputText.value = ''
 
   try {
-    const response = await fetch('https://api.chatanywhere.com.cn/v1/chat/completions', {
+    const response = await fetch('https://maas-api.cn-huabei-1.xf-yun.com/v1/chat/completions', {
       method: 'POST',
       headers: {
-        'Authorization': 'Bearer YOUR_API_KEY',
+        'Authorization': 'sk-4et9jiY6FXWulZNX94295c643b52446bA3A04370C9412c44',
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        model: "gpt-3.5-turbo",
+        model: "xdeepseekv3",
         messages: [{ role: "user", content: message }]
       })
     })

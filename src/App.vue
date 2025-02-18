@@ -1,10 +1,9 @@
 <template>
-  <chat/>
+  <home/>
 </template>
 
-<!-- testfeng -->
 <script lang="ts" setup>
-import Chat from "./components/chat.vue";
+import Home from "./components/home.vue";
 </script>
 
 <style scoped>

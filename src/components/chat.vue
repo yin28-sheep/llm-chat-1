@@ -5,9 +5,9 @@
       <div
           v-for="(message, index) in chatMessages"
           :key="index"
-          :class="message.role === 'user' ? 'user-message' : 'ai-message'"
+          :class="['message-bubble', message.role === 'user' ? 'user-message' : 'ai-message']"
       >
-        {{ message.content }}
+        <pre>{{ message.content }}</pre>
       </div>
     </div>
     <div class="input-container">
@@ -41,6 +41,7 @@ interface ChatGPTResponse {
 const inputText = ref('')
 const chatMessages = ref<Message[]>([])
 const chatLogRef = ref<HTMLElement | null>(null)
+const isLoading = ref(false)
 
 const addMessage = (message: Message) => {
   chatMessages.value.push(message)
@@ -53,8 +54,9 @@ const addMessage = (message: Message) => {
 
 const sendMessage = async () => {
   const message = inputText.value.trim()
-  if (!message) return
+  if (!message || isLoading.value) return
 
+  isLoading.value = true
   // 添加用户消息
   addMessage({
     role: 'user',
@@ -71,7 +73,10 @@ const sendMessage = async () => {
       },
       body: JSON.stringify({
         model: "xdeepseekv3",
-        messages: [{ role: "user", content: message }]
+        messages: chatMessages.value.map(m => ({
+          role: m.role,
+          content: m.content
+        }))
       })
     })
 
@@ -88,7 +93,12 @@ const sendMessage = async () => {
 
   } catch (error) {
     console.error('请求失败:', error)
-    // 可以在这里添加错误处理逻辑
+    addMessage({
+      role: 'assistant',
+      content: '请求失败，请稍后再试'
+    })
+  } finally {
+    isLoading.value = false
   }
 }
 </script>
@@ -116,27 +126,35 @@ h1 {
 }
 
 .chat-log {
-  margin-bottom: 20px;
-  overflow-y: scroll;
-  max-height: 300px;
-  padding-right: 10px;
-  border-right: 1px solid #ccc;
+  flex: 1;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow-y: auto;
+}
+
+.message-bubble {
+  max-width: 80%;
+  padding: 12px 16px;
+  border-radius: 15px;
+  word-break: break-word;
 }
 
 .user-message {
-  background-color: #f5f5f5;
-  color: #333;
-  border-radius: 5px;
-  padding: 10px;
-  margin-bottom: 10px;
+  background: #e8f4ff;
+  align-self: flex-end;
 }
 
 .ai-message {
-  background-color: #007bff;
-  color: #fff;
-  border-radius: 5px;
-  padding: 10px;
-  margin-bottom: 10px;
+  background: #f5f5f5;
+  align-self: flex-start;
+}
+
+pre {
+  white-space: pre-wrap;
+  font-family: inherit;
+  margin: 0;
 }
 
 .input-container {
@@ -159,5 +177,11 @@ h1 {
   border: none;
   border-radius: 5px;
   cursor: pointer;
+}
+
+/* 修改发送按钮禁用状态 */
+.send-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 </style>

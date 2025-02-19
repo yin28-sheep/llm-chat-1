@@ -1,6 +1,7 @@
 // 聊天会话状态管理模块
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
+import { switchToChat } from '../utils/ListChatToMitter'
 
 // 定义聊天会话接口
 interface ChatSession {
@@ -29,8 +30,12 @@ export const useCreateMessageStore = defineStore('createMessage', () => {
     chatSessions.value.push(newSession)
     currentSessionId.value = newSession.id
     isCreatingNewSession.value = false
+    // 触发切换会话事件
+    switchToChat({
+      id: newSession.id,
+      title: newSession.name
+    })
   }
-
   // 设置创建会话状态
   const setCreatingNewSession = (status: boolean) => {
     isCreatingNewSession.value = status

@@ -1,11 +1,11 @@
-interface ChatMessage {
+export interface stChatMessage {
     role: 'system' | 'user' | 'assistant';
     content: string;
 }
 
-interface ChatCompletionParams {
+export interface stChatCompletionParams {
     model: string;
-    messages: ChatMessage[];
+    messages: stChatMessage[];
     stream: boolean;
     temperature?: number;
     max_tokens?: number;
@@ -18,7 +18,7 @@ interface ChatCompletionParams {
     };
 }
 
-interface StreamResponseChunk {
+export interface stStreamResponseChunk {
     id: string;
     choices: Array<{
         delta: {
@@ -34,7 +34,7 @@ interface StreamResponseChunk {
     };
 }
 
-interface APIError extends Error {
+export interface APIError extends Error {
     code?: number;
     status?: number;
 }

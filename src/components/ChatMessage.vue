@@ -40,5 +40,7 @@ defineExpose({
 </script>
 
 <style scoped>
+
 @import '@/styles/ChatMessage.css';
+
 </style>

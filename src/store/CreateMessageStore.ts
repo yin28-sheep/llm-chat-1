@@ -1,16 +1,8 @@
 // 聊天会话状态管理模块
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-
-// 定义聊天会话接口
-interface ChatSession {
-  id: string      // 会话唯一标识
-  name: string    // 会话名称
-  messages: Array<{  // 会话消息列表
-    role: 'user' | 'assistant'  // 消息角色：用户或AI助手
-    content: string             // 消息内容
-  }>
-}
+import { switchToChat } from '../utils/ListChatToMitter'
+import type { ChatSession } from '../types/chatMessages'
 
 // 创建并导出会话管理store
 export const useCreateMessageStore = defineStore('createMessage', () => {
@@ -29,8 +21,12 @@ export const useCreateMessageStore = defineStore('createMessage', () => {
     chatSessions.value.push(newSession)
     currentSessionId.value = newSession.id
     isCreatingNewSession.value = false
+    // 自动触发切换会话事件
+    switchToChat({
+      id: newSession.id,
+      title: newSession.name
+    })
   }
-
   // 设置创建会话状态
   const setCreatingNewSession = (status: boolean) => {
     isCreatingNewSession.value = status

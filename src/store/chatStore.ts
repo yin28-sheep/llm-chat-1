@@ -1,16 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-
-// 定义消息接口
-interface Message {
-  role: 'user' | 'assistant'
-  content: string
-}
-
-// 定义会话消息映射接口
-interface SessionMessages {
-  [sessionId: string]: Message[]
-}
+import type { Message, SessionMessages } from '../types/chatMessages'
 
 // 定义并导出聊天状态管理store
 export const useChatStore = defineStore('chat', () => {

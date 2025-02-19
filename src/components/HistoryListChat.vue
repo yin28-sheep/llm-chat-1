@@ -28,7 +28,8 @@
 <script setup lang="ts">
 import { ref, nextTick } from 'vue'
 import { useCreateMessageStore } from '../store/CreateMessageStore'
-import { useEditMessageStore } from '../store/editMessageChat'
+import { useEditMessageStore } from '../store/EditMessageChatStore'
+import { switchToChat, deleteChat, renameChat } from '../utils/ListChatToMitter'
 
 interface Props {
   session: {
@@ -61,6 +62,8 @@ const handleRename = () => {
   const newName = editingName.value.trim()
   if (newName && newName !== props.session.name) {
     editStore.renameSession(store.chatSessions, props.session.id, newName)
+    // 触发重命名事件
+    renameChat(props.session.id, newName)
   }
   isEditing.value = false
 }
@@ -69,6 +72,8 @@ const handleRename = () => {
 const handleDelete = () => {
   if (confirm('确定要删除这个会话吗？')) {
     editStore.deleteSession(store.chatSessions, props.session.id)
+    // 触发删除事件
+    deleteChat(props.session.id)
   }
 }
 
@@ -76,6 +81,11 @@ const handleDelete = () => {
 const handleClick = () => {
   if (!isEditing.value) {
     store.selectSession(props.session.id)
+    // 使用mitt触发切换会话事件
+    switchToChat({
+      id: props.session.id,
+      title: props.session.name
+    })
   }
 }
 </script>
@@ -150,4 +160,4 @@ const handleClick = () => {
   border-color: #1890ff;
   box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
 }
-</style>
+</style>../store/EditMessageChatStore

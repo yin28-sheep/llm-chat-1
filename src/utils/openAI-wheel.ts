@@ -2,6 +2,7 @@
 // 安装必要依赖
 // npm install @types/node --save-dev  # 用于Node.js环境类型定义
 
+// 接口 应该放到/modules这个文件夹
 interface ChatMessage {
     role: 'system' | 'user' | 'assistant';
     content: string;
@@ -43,6 +44,7 @@ interface APIError extends Error {
     status?: number;
 }
 
+// 正题
 const MAX_RETRIES = 2;
 const REQUEST_TIMEOUT = 15000; // 15秒超时
 

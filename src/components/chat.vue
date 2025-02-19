@@ -23,6 +23,7 @@ import { useChatStore } from '../store/chatStore'
 // 初始化聊天状态管理
 const chatStore = useChatStore()
 
+
 // 组件引用：用于控制消息列表滚动
 const messageRef = ref<{ scrollToBottom: () => void } | null>(null)
 const currentTitle = ref<string>('')
@@ -31,6 +32,7 @@ const currentTitle = ref<string>('')
 const handleScroll = () => {
   messageRef.value?.scrollToBottom()
 }
+
 
 // 处理会话切换事件
 const handleSwitchChat = (chatInfo: { id: string; title: string }) => {
@@ -69,20 +71,9 @@ onUnmounted(() => {
 })
 </script>
 
-<style scoped>
-.container {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  width: 100%;
-  padding: 20px;
-  box-sizing: border-box;
-}
 
-h1 {
-  margin: 0 0 20px;
-  font-size: 24px;
-  color: #333;
-  flex-shrink: 0;
-}
+<style scoped>
+/* 使用 @import 引入外部样式文件 */
+@import '@/styles/chat.css';
+
 </style>

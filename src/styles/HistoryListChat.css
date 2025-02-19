@@ -1,0 +1,69 @@
+.history-item {
+    padding: 15px;
+    border-bottom: 1px solid #f0f0f0;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .history-item:hover {
+    background-color: #f8f8f8;
+  }
+  
+  .history-item.active {
+    background-color: #e8f4ff;
+  }
+  
+  .message-preview {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  
+  .actions {
+    display: flex;
+    gap: 8px;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  
+  .history-item:hover .actions {
+    opacity: 1;
+  }
+  
+  .action-btn {
+    padding: 4px 8px;
+    border: none;
+    background: #e8e8e8;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: background-color 0.2s;
+  }
+  
+  .action-btn:hover {
+    background: #d8d8d8;
+  }
+  
+  .action-btn.delete:hover {
+    background: #ff4d4f;
+    color: white;
+  }
+  
+  .edit-input {
+    flex: 1;
+    padding: 4px 8px;
+    border: 1px solid #d9d9d9;
+    border-radius: 4px;
+    font-size: 14px;
+    margin-right: 8px;
+  }
+  
+  .edit-input:focus {
+    outline: none;
+    border-color: #1890ff;
+    box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+  }

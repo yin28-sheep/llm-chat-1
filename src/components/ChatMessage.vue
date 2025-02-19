@@ -40,40 +40,7 @@ defineExpose({
 </script>
 
 <style scoped>
-.chat-log {
-  flex: 1;
-  padding: 10px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  overflow-y: auto;
-  margin-bottom: 10px;
-  height: 0;
-  min-height: 0;
-}
 
-.message-bubble {
-  padding: 12px;
-  border-radius: 8px;
-  max-width: 80%;
-  word-break: break-word;
-}
+@import '@/styles/ChatMessage.css';
 
-.user-message {
-  align-self: flex-end;
-  background-color: #007bff;
-  color: white;
-}
-
-.ai-message {
-  align-self: flex-start;
-  background-color: #f8f9fa;
-  color: #333;
-}
-
-.message-bubble pre {
-  margin: 0;
-  white-space: pre-wrap;
-  font-family: inherit;
-}
 </style>

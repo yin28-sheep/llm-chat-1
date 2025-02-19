@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
+ import path from 'path'
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -15,6 +16,11 @@ export default defineConfig({
           'Authorization': 'sk-4et9jiY6FXWulZNX94295c643b52446bA3A04370C9412c44' 
         }
       }
+    }
+  },
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, './src')
     }
   }
 })

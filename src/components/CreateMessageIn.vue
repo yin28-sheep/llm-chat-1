@@ -47,24 +47,7 @@ defineExpose({
 </script>
 
 <style scoped>
-/* 输入容器样式 */
-.create-message-input {
-  padding: 10px;
-  border-bottom: 1px solid #e0e0e0;
-}
 
-/* 输入框基础样式 */
-.input {
-  width: 100%;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 14px;
-}
+@import '@/styles/CreateMessageIn.css';
 
-/* 输入框焦点样式 */
-.input:focus {
-  outline: none;
-  border-color: #007bff;
-}
 </style>

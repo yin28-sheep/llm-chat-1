@@ -1,8 +1,15 @@
+// 主聊天界面组件：整合聊天消息显示和输入功能
 <template>
   <!-- 聊天界面主容器 -->
   <div class="container">
-    <!-- 标题 -->
+    <!-- 标题：显示当前AI模型名称 -->
     <h1>DeepSeek-V3</h1>
+
+    <!-- 聊天消息组件：用于显示消息历史记录 -->
+    <chat-message ref="messageRef" />
+    <!-- 底部输入组件：用于用户输入和发送消息 -->
+    <chat-bottom @scroll="handleScroll" />
+
     <!-- 聊天记录显示区域，使用ref获取DOM元素用于滚动控制 -->
     <div ref="chatLogRef" class="chat-log">
       <!-- 遍历显示聊天消息，根据角色应用不同样式 -->
@@ -30,6 +37,10 @@
   </div>
 </template>
 
+<script setup lang="ts">
+import { ref } from 'vue'
+import ChatMessage from './ChatMessage.vue'
+import ChatBottom from './ChatBottom.vue'
 <script lang="ts" setup>
 // 导入所需的Vue组件和工具
 import {nextTick, ref} from 'vue'
@@ -41,58 +52,23 @@ const inputText = ref('') // 输入框文本
 const chatLogRef = ref<HTMLElement | null>(null) // 聊天记录容器引用
 const {messages: chatMessages, isLoading, addMessage} = useChatStore() // 从store中获取状态和方法
 
-// 滚动到聊天记录底部
-const scrollToBottom = () => {
-  nextTick(() => {
-    if (chatLogRef.value) {
-      chatLogRef.value.scrollTop = chatLogRef.value.scrollHeight
-    }
-  })
-}
+// 组件引用：用于控制消息列表滚动
+const messageRef = ref<{ scrollToBottom: () => void } | null>(null)
 
-// 发送消息处理函数
-const sendMessage = async () => {
-  const message = inputText.value.trim()
-  if (!message || isLoading.value) return
-
-  isLoading.value = true
-  // 添加用户消息到聊天记录
-  addMessage({
-    role: 'user',
-    content: message
-  })
-  inputText.value = ''
-  scrollToBottom()
-
-  try {
-    // 发送消息到服务器并获取回复
-    const reply = await sendChatMessage(chatMessages.value)
-    // 添加AI回复到聊天记录
-    addMessage({
-      role: 'assistant',
-      content: reply
-    })
-    scrollToBottom()
-  } catch (error) {
-    // 错误处理
-    addMessage({
-      role: 'assistant',
-      content: '请求失败，请稍后再试'
-    })
-  } finally {
-    isLoading.value = false
-  }
+// 处理滚动事件：当新消息发送或接收时，滚动到底部
+const handleScroll = () => {
+  messageRef.value?.scrollToBottom()
 }
 </script>
 
 <style scoped>
-/* 基础样式设置 */
+/* 基础样式设置：设置全局字体和背景色 */
 body {
   font-family: Arial, sans-serif;
   background-color: #f5f5f5;
 }
 
-/* 主容器样式 */
+/* 主容器样式：设置布局和视觉效果 */
 .container {
   width: 100%;
   height: 100%;
@@ -104,7 +80,7 @@ body {
   border-radius: 5px;
 }
 
-/* 标题样式 */
+/* 标题样式：设置标题的对齐和间距 */
 h1 {
   text-align: center;
   margin-bottom: 20px;

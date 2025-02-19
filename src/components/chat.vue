@@ -18,6 +18,7 @@ import { ref } from 'vue'
 import ChatMessage from './ChatMessage.vue'
 import ChatBottom from './ChatBottom.vue'
 
+
 // 组件引用：用于控制消息列表滚动
 const messageRef = ref<{ scrollToBottom: () => void } | null>(null)
 
@@ -28,27 +29,7 @@ const handleScroll = () => {
 </script>
 
 <style scoped>
-/* 基础样式设置：设置全局字体和背景色 */
-body {
-  font-family: Arial, sans-serif;
-  background-color: #f5f5f5;
-}
+/* 使用 @import 引入外部样式文件 */
+@import '@/styles/chat.css';
 
-/* 主容器样式：设置布局和视觉效果 */
-.container {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  padding: 20px;
-  background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  border-radius: 5px;
-}
-
-/* 标题样式：设置标题的对齐和间距 */
-h1 {
-  text-align: center;
-  margin-bottom: 20px;
-}
 </style>

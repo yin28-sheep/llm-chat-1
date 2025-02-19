@@ -37,36 +37,5 @@ const handleConfirmSession = () => {
 </script>
 
 <style scoped>
-/* 创建会话容器样式 */
-.create-message {
-  padding: 10px;
-  border-bottom: 1px solid #e0e0e0;
-}
-
-/* 创建按钮样式 */
-.create-button {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 10px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.2s;
-}
-
-/* 创建按钮悬停效果 */
-.create-button:hover {
-  background-color: #0056b3;
-}
-
-/* 加号图标样式 */
-.plus-icon {
-  font-size: 18px;
-  font-weight: bold;
-}
+@import '@/styles/CreateMessage.css';
 </style>

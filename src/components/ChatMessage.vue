@@ -40,41 +40,5 @@ defineExpose({
 </script>
 
 <style scoped>
-/* 聊天记录区域样式 */
-.chat-log {
-  flex: 1;
-  padding: 10px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  overflow-y: auto;
-  margin-bottom: 10px;
-}
-
-/* 消息气泡通用样式 */
-.message-bubble {
-  max-width: 80%;
-  padding: 12px 16px;
-  border-radius: 15px;
-  word-break: break-word;
-}
-
-/* 用户消息样式 */
-.user-message {
-  background: #e8f4ff;
-  align-self: flex-end;
-}
-
-/* AI消息样式 */
-.ai-message {
-  background: #f5f5f5;
-  align-self: flex-start;
-}
-
-/* 消息文本样式 */
-pre {
-  white-space: pre-wrap;
-  font-family: inherit;
-  margin: 0;
-}
+@import '@/styles/ChatMessage.css';
 </style>

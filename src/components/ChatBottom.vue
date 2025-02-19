@@ -69,45 +69,5 @@ const emit = defineEmits(['scroll']) // 定义scroll事件用于通知父组件�
 </script>
 
 <style scoped>
-/* 输入区域容器样式 */
-.input-container {
-  display: flex;
-  align-items: center;
-  padding: 20px;
-  border-top: 1px solid #eee;
-  background-color: #fff;
-  flex-shrink: 0;
-}
-
-/* 输入框样式 */
-.input {
-  flex: 1;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 14px;
-}
-
-/* 发送按钮样式 */
-.send-button {
-  margin-left: 10px;
-  padding: 10px 20px;
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 14px;
-}
-
-/* 禁用状态样式 */
-.send-button:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
-.input:disabled {
-  background-color: #f5f5f5;
-  cursor: not-allowed;
-}
+@import '@/styles/chatBottom.css';
 </style>

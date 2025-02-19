@@ -35,21 +35,5 @@ defineExpose({
 </script>
 
 <style scoped>
-.create-message-input {
-  padding: 10px;
-  border-bottom: 1px solid #e0e0e0;
-}
-
-.input {
-  width: 100%;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 14px;
-}
-
-.input:focus {
-  outline: none;
-  border-color: #007bff;
-}
+@import '@/styles/CreateMessageIn.css';
 </style>

@@ -54,6 +54,6 @@ export const useCreateMessageStore = defineStore('createMessage', () => {
     createNewSession,
     setCreatingNewSession,
     selectSession,
-    getCurrentSession
+    getCurrentSession,
   }
 })

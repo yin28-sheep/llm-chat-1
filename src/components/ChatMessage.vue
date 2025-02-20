@@ -14,26 +14,26 @@
     <!-- 加载状态提示 -->
     <div v-if="isLoading" class="loading">AI正在思考中...</div>
     <!-- 资源使用统计 -->
-    <div v-if="usageData" class="usage">
+    <!-- <div v-if="usageData" class="usage">
       <h3>资源使用统计</h3>
       <p>输入Token: {{ usageData.prompt_tokens }}</p>
       <p>输出Token: {{ usageData.completion_tokens }}</p>
       <p>总计Token: {{ usageData.total_tokens }}</p>
-    </div>
-  </div>
+    </div>-->
+  </div> 
 </template>
 
 <script setup lang="ts">
 import { ref, nextTick } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useChatStore } from '../store/chatStore'
-import type { StreamResponseChunk } from '../services/chat'
+// import type { StreamResponseChunk } from '../services/chat'
 
 // 组件状态管理
 const chatLogRef = ref<HTMLElement | null>(null) // 聊天记录容器引用
 const chatStore = useChatStore() // 初始化聊天状态管理store
 const { messages: chatMessages, isLoading } = storeToRefs(chatStore) // 获取聊天消息列表和加载状态
-const usageData = ref<StreamResponseChunk['usage'] | null>(null) // 资源使用统计数据
+// const usageData = ref<StreamResponseChunk['usage'] | null>(null) // 资源使用统计数据
 
 // 滚动到聊天记录底部的方法
 // 使用nextTick确保DOM更新后再执行滚动

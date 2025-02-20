@@ -6,7 +6,7 @@ import { sendStreamMessage, processStream, type StreamResponseChunk } from '../s
 export const useChatBottomStore = defineStore('chatBottom', () => {
   // 状态定义
   const inputText = ref('') // 输入框文本
-  const messageRef = ref<{ usageData: StreamResponseChunk['usage'] | null }>({ usageData: null }) // 消息引用
+  const messageRef = ref<{ usageData: StreamResponseChunk['usage'] | null } | null>(null) // 消息引用
 
   // 设置输入文本
   const setInputText = (text: string) => {
@@ -53,7 +53,9 @@ export const useChatBottomStore = defineStore('chatBottom', () => {
           },
           (usage) => {
             // 更新使用统计数据
-            messageRef.value.usageData = usage
+            if (messageRef.value) {
+              messageRef.value.usageData = usage
+            }
           }
         )
       }

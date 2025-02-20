@@ -12,7 +12,7 @@ export async function* streamChatCompletion(
     apiKey: string,
     params: stChatCompletionParams
 ): AsyncGenerator<stStreamResponseChunk, void> {
-    const endpoint = 'https://maas-api.cn-huabei-1.xf-yun.com/v1/chat/completions';
+    const endpoint = '/api/v1/chat/completions';
 
     const headers = {
         'Content-Type': 'application/json',

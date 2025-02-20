@@ -10,8 +10,12 @@ export default defineConfig({
         target: 'https://maas-api.cn-huabei-1.xf-yun.com',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''),
-        headers: {
-          'Authorization': 'sk-4et9jiY6FXWulZNX94295c643b52446bA3A04370C9412c44'
+        configure: (proxy, options) => {
+          proxy.on('proxyRes', (proxyRes) => {
+            proxyRes.headers['Access-Control-Allow-Origin'] = '*'
+            proxyRes.headers['Access-Control-Allow-Methods'] = '*'
+            proxyRes.headers['Access-Control-Allow-Headers'] = '*'
+          })
         }
       }
     }

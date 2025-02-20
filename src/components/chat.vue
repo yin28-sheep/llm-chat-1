@@ -9,7 +9,6 @@
     <chat-message ref="messageRef" />
     <!-- 底部输入组件：用于用户输入和发送消息 -->
     <chat-bottom @scroll="handleScroll" />
-    <stream-chat/>
 
   </div>
 </template>
@@ -20,7 +19,6 @@ import ChatMessage from './ChatMessage.vue'
 import ChatBottom from './ChatBottom.vue'
 import { onSwitchChat, onDeleteChat, onRenameChat, removeListener } from '../utils/ListChatToMitter'
 import { useChatStore } from '../store/chatStore'
-import StreamChat from "../components/streamChat.vue";
 
 // 初始化聊天状态管理
 const chatStore = useChatStore()

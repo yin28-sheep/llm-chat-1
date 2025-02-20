@@ -32,7 +32,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive } from 'vue'
+import { ref } from 'vue'
 
 interface ChatMessage {
   role: 'system' | 'user' | 'assistant'

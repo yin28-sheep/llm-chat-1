@@ -33,6 +33,8 @@ const { addMessage } = chatStore // 获取添加消息方法
 // 3. 发送消息到服务器
 // 4. 处理AI回复
 const sendMessage = async () => {
+  console.log('[UI] 发送消息，环境变量VITE_API_KEY:', import.meta.env.VITE_API_KEY ? '存在' : '缺失');
+  
   const message = inputText.value.trim()
   if (!message || isLoading.value) return
 
@@ -66,9 +68,19 @@ const sendMessage = async () => {
       stream_options: { include_usage: true }
     } satisfies stChatCompletionParams)
 
+    console.log('[UI] 请求参数:', JSON.stringify({
+      model: 'xdeepseekv3',
+      messages: chatMessages.value,
+      stream: true,
+      temperature: 0.7,
+      max_tokens: 1024,
+      stream_options: { include_usage: true }
+    }));
+
     // 添加防抖滚动优化
     let scrollPending = false
     for await (const chunk of stream) {
+      console.log('[UI] 收到数据块:', chunk);
       const content = [
         chunk.choices[0]?.delta?.reasoning_content,
         chunk.choices[0]?.delta?.content
@@ -88,11 +100,13 @@ const sendMessage = async () => {
       }
     }
   } catch (error) {
+    console.error('[UI] 捕获错误:', error);
     const err = error as APIError
     // 添加防御性检查
     if (tempMessage) {
       const errorMsg = err.status ? 
-        `请求失败 (${err.status}): ${err.message || '无错误详情'}` : 
+        (err.status === 401 ? 'API密钥无效' : 
+        `请求失败 (${err.status}): ${err.message || '无错误详情'}`) : 
         '网络连接异常，请检查网络'
       chatStore.updateLastMessage(tempMessage.id, errorMsg)
     }

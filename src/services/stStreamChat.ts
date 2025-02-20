@@ -12,11 +12,13 @@ export async function* streamChatCompletion(
     apiKey: string,
     params: stChatCompletionParams
 ): AsyncGenerator<stStreamResponseChunk, void> {
+    console.log('[API] 开始请求，API Key前5位:', apiKey.slice(0,5), '参数:', JSON.stringify(params));
+
     const endpoint = '/api/v1/chat/completions';
 
     const headers = {
         'Content-Type': 'application/json',
-        'Authorization': 'sk-4et9jiY6FXWulZNX94295c643b52446bA3A04370C9412c44',
+        'Authorization': `Bearer ${apiKey}`,
         ...(params.extra_headers || {})
     };
 
@@ -38,10 +40,12 @@ export async function* streamChatCompletion(
                 body,
                 signal: controller.signal
             });
+            console.log('[API] 收到响应，状态码:', response.status);
 
             clearTimeout(timeoutId);
 
             if (!response.ok) {
+                console.error('[API] 响应异常，状态码:', response.status);
                 const errorData = await response.json().catch(() => null);
                 const error = new Error(`HTTP error! status: ${response.status}`) as APIError;
                 error.status = response.status;
@@ -50,6 +54,8 @@ export async function* streamChatCompletion(
             }
 
             const reader = response.body?.getReader();
+            console.log('[API] 响应流读取器状态:', reader ? '有效' : '无效');
+
             if (!reader) {
                 throw new Error('Failed to read response stream');
             }
@@ -60,6 +66,7 @@ export async function* streamChatCompletion(
             try {
                 while (true) {
                     const { done, value } = await reader.read();
+                    console.log('[API] 读取流数据块:', { done, valueLength: value?.length });
                     if (done) break;
 
                     buffer += decoder.decode(value, { stream: true });
@@ -90,6 +97,7 @@ export async function* streamChatCompletion(
 
             return; // 成功完成
         } catch (error) {
+            console.error('[API] 请求异常:', error);
             clearTimeout(timeoutId);
 
             if (retries === MAX_RETRIES) {

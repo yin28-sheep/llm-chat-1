@@ -7,9 +7,9 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'https://maas-api.cn-huabei-1.xf-yun.com',
+        target: 'https://maas-api.cn-huabei-1.xf-yun.com/v1',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, ''),
+        rewrite: (path) => path.replace(/^\/api/, '/api/v1'),
         configure: (proxy, options) => {
           proxy.on('proxyRes', (proxyRes) => {
             proxyRes.headers['Access-Control-Allow-Origin'] = '*'

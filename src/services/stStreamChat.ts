@@ -19,6 +19,7 @@ export async function* streamChatCompletion(
     const headers = {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${apiKey}`,
+        'X-MaaS-Version': '1.0.0',
         ...(params.extra_headers || {})
     };
 
@@ -50,6 +51,12 @@ export async function* streamChatCompletion(
                 const error = new Error(`HTTP error! status: ${response.status}`) as APIError;
                 error.status = response.status;
                 error.code = errorData?.error?.code;
+                
+                if (response.status === 403) {
+                    error.message = `模型权限错误: ${errorData?.error?.message || '无详情'}`;
+                } else if (response.status === 429) {
+                    error.message = `请求过频繁: ${errorData?.error?.message || '请稍后重试'}`;
+                }
                 throw error;
             }
 

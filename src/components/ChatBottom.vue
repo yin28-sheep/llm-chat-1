@@ -60,20 +60,26 @@ const sendMessage = async () => {
 
     // 使用符合类型定义的请求参数
     const stream = streamChatCompletion(import.meta.env.VITE_API_KEY, {
-      model: 'xdeepseekv3',
+      model: import.meta.env.VITE_MODEL_NAME || 'xdeepseekv3',
       messages: chatMessages.value.map(({ role, content }) => ({ role, content })),
       stream: true,
       temperature: 0.7,
       max_tokens: 1024,
+      extra_headers: { 
+        lora_id: "0"
+      },
       stream_options: { include_usage: true }
     } satisfies stChatCompletionParams)
 
     console.log('[UI] 请求参数:', JSON.stringify({
-      model: 'xdeepseekv3',
+      model: import.meta.env.VITE_MODEL_NAME || 'xdeepseekv3',
       messages: chatMessages.value,
       stream: true,
       temperature: 0.7,
       max_tokens: 1024,
+      extra_headers: { 
+        lora_id: "0"
+      },
       stream_options: { include_usage: true }
     }));
 
@@ -81,10 +87,10 @@ const sendMessage = async () => {
     let scrollPending = false
     for await (const chunk of stream) {
       console.log('[UI] 收到数据块:', chunk);
-      const content = [
-        chunk.choices[0]?.delta?.reasoning_content,
-        chunk.choices[0]?.delta?.content
-      ].filter(Boolean).join('')
+      const delta = chunk.choices[0]?.delta;
+      const content = delta?.reasoning_content 
+        ? `【思考】${delta.reasoning_content}\n${delta.content || ''}` 
+        : delta?.content || '';
 
       if (content) {
         chatStore.updateLastMessage(tempMessage.id, content)

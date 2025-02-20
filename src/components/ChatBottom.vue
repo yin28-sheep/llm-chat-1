@@ -17,7 +17,8 @@
 import { ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useChatStore } from '../store/chatStore'
-import { sendChatMessage } from '../services/chat'
+import { streamChatCompletion } from '../services/stStreamChat'
+import type { stChatMessage, stChatCompletionParams, APIError } from '../models/stChatModel'
 
 // 组件状态管理
 const inputText = ref('') // 输入框文本状态
@@ -35,32 +36,68 @@ const sendMessage = async () => {
   const message = inputText.value.trim()
   if (!message || isLoading.value) return
 
-  chatStore.setLoading(true) // 设置加载状态
-  // 添加用户消息到聊天记录
+  chatStore.setLoading(true)
   addMessage({
     role: 'user',
-    content: message
+    content: message,
+    id: Date.now()
   })
-  inputText.value = '' // 清空输入框
-  emit('scroll') // 触发滚动事件
+  inputText.value = ''
+  emit('scroll')
 
+  // 修正临时消息类型（移除stChatMessage交叉类型）
+  const tempMessage = {
+    role: 'assistant' as const, // 明确指定为assistant类型
+    content: '',
+    id: Date.now()
+  }
+  
   try {
-    // 发送消息到服务器并获取AI回复
-    const reply = await sendChatMessage(chatMessages.value)
-    // 添加AI回复到聊天记录
-    addMessage({
-      role: 'assistant',
-      content: reply
-    })
-    emit('scroll') // 收到回复后再次触发滚动
+    // 初始化临时消息
+    addMessage(tempMessage)
+
+    // 使用符合类型定义的请求参数
+    const stream = streamChatCompletion(import.meta.env.VITE_API_KEY, {
+      model: 'xdeepseekv3',
+      messages: chatMessages.value.map(({ role, content }) => ({ role, content })),
+      stream: true,
+      temperature: 0.7,
+      max_tokens: 1024,
+      stream_options: { include_usage: true }
+    } satisfies stChatCompletionParams)
+
+    // 添加防抖滚动优化
+    let scrollPending = false
+    for await (const chunk of stream) {
+      const content = [
+        chunk.choices[0]?.delta?.reasoning_content,
+        chunk.choices[0]?.delta?.content
+      ].filter(Boolean).join('')
+
+      if (content) {
+        chatStore.updateLastMessage(tempMessage.id, content)
+        
+        // 每5次更新触发一次滚动
+        if (!scrollPending) {
+          scrollPending = true
+          requestAnimationFrame(() => {
+            emit('scroll')
+            scrollPending = false
+          })
+        }
+      }
+    }
   } catch (error) {
-    // 错误处理：显示错误提示消息
-    addMessage({
-      role: 'assistant',
-      content: '请求失败，请稍后再试'
-    })
+    const err = error as APIError
+    // 添加防御性检查
+    if (tempMessage) {
+      const errorMsg = err.status ? 
+        `请求失败 (${err.status}): ${err.message || '无错误详情'}` : 
+        '网络连接异常，请检查网络'
+      chatStore.updateLastMessage(tempMessage.id, errorMsg)
+    }
   } finally {
-    chatStore.setLoading(false) // 重置加载状态
+    chatStore.setLoading(false)
   }
 }
 

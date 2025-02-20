@@ -11,10 +11,10 @@ export default defineConfig({
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''),
         headers: {
-          // 建议将鉴权信息移至后端
-          'Authorization': 'sk-4et9jiY6FXWulZNX94295c643b52446bA3A04370C9412c44' 
+          'Authorization': 'sk-4et9jiY6FXWulZNX94295c643b52446bA3A04370C9412c44'
         }
       }
     }
-  }
+  },
+  envPrefix: 'VITE_'
 })

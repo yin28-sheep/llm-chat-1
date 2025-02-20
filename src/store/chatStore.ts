@@ -5,6 +5,7 @@ import { ref } from 'vue'
 interface Message {
   role: 'user' | 'assistant'
   content: string
+  id: number
 }
 
 // 定义并导出聊天状态管理store
@@ -29,11 +30,19 @@ export const useChatStore = defineStore('chat', () => {
     isLoading.value = status
   }
 
+  const updateLastMessage = (id: number, newContent: string) => {
+    const index = messages.value.findIndex(msg => msg.id === id)
+    if (index !== -1) {
+      messages.value[index].content += newContent
+    }
+  }
+
   return {
     messages,
     isLoading,
     addMessage,
     clearMessages,
-    setLoading
+    setLoading,
+    updateLastMessage
   }
 })

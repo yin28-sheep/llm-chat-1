@@ -1,4 +1,8 @@
 /* 输入区域容器样式 */
+.chat-bottom {
+    margin-bottom: 44px;
+  }
+
 .input-container {
     display: flex;
     align-items: center;

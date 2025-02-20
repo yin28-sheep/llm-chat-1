@@ -39,11 +39,12 @@ const handleEnter = () => {
 <style scoped>
 .input-container {
   display: flex;
+  flex: 1;
   padding: 10px;
 }
 
 .input {
-  flex: 1;
+  width: 100%;
   padding: 8px 12px;
   border: 1px solid #ddd;
   border-radius: 4px;

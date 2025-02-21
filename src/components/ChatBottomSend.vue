@@ -21,23 +21,5 @@ const handleSend = () => {
 </script>
 
 <style scoped>
-.send-button {
-  margin-left: 10px;
-  padding: 8px 16px;
-  background-color: #1890ff;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 14px;
-}
-
-.send-button:hover {
-  background-color: #40a9ff;
-}
-
-.send-button:disabled {
-  background-color: #d9d9d9;
-  cursor: not-allowed;
-}
+@import'@/styles/chatBottomSend.css'
 </style>

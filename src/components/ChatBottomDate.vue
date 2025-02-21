@@ -17,21 +17,5 @@ defineProps<{
 </script>
 
 <style scoped>
-.usage {
-  padding: 15px;
-  background-color: #f5f5f5;
-  border-radius: 4px;
-}
-
-.usage h3 {
-  margin: 0 0 10px;
-  font-size: 16px;
-  color: #333;
-}
-
-.usage p {
-  margin: 5px 0;
-  font-size: 14px;
-  color: #666;
-}
+@import '@/styles/ChatBottomDate.css'
 </style>

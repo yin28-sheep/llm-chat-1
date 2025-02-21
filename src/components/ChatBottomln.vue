@@ -37,22 +37,5 @@ const handleEnter = () => {
 </script>
 
 <style scoped>
-.input-container {
-  display: flex;
-  flex: 1;
-  padding: 10px;
-}
-
-.input {
-  width: 100%;
-  padding: 8px 12px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 14px;
-}
-
-.input:disabled {
-  background-color: #f5f5f5;
-  cursor: not-allowed;
-}
+@import '@/styles/ChatBottomIn.css'
 </style>

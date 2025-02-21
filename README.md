@@ -10,4 +10,5 @@ Learn more about the recommended Project Setup and IDE Support in the [Vue Docs 
 - Vite 6.1.0
 - Pinia 3.0.1
 - Vuetify 3.7.12
+- highlight.js 11.11.1
 - node版本需要大于18

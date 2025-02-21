@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { sendStreamMessage, processStream, type StreamResponseChunk } from '../services/chat'
+import { useCreateMessageStore } from './CreateMessageStore'
 
 // 定义并导出聊天输入状态管理store
 export const useChatBottomStore = defineStore('chatBottom', () => {
@@ -17,7 +18,6 @@ export const useChatBottomStore = defineStore('chatBottom', () => {
   const clearInputText = () => {
     inputText.value = ''
   }
-
   // 发送消息处理函数
   const sendMessage = async (messageHistory: any[], addMessage: Function, setLoading: Function, onScroll: Function) => {
     const message = inputText.value.trim()
@@ -26,14 +26,26 @@ export const useChatBottomStore = defineStore('chatBottom', () => {
     setLoading(true)
     clearInputText()
 
+    // 导入创建会话store
+    const createMessageStore = useCreateMessageStore()
+    
     try {
-      // 添加用户消息
+      // 如果是首次发送消息（没有当前会话），先创建新会话
+      if (!createMessageStore.currentSessionId) {
+        createMessageStore.createNewSession(message)
+        // 等待状态更新完成
+        await new Promise(resolve => setTimeout(resolve, 1000))
+      }
+
+      // 添加用户消息并等待DOM更新
       addMessage({
         role: 'user',
         content: message
       })
+      await new Promise(resolve => setTimeout(resolve, 100))
 
-      // 添加初始AI消息
+      // 设置加载状态并添加AI消息
+      setLoading(true)
       addMessage({
         role: 'assistant',
         content: ''
@@ -71,7 +83,6 @@ export const useChatBottomStore = defineStore('chatBottom', () => {
       setLoading(false)
     }
   }
-
   return {
     inputText,
     messageRef,

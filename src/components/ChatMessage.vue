@@ -13,7 +13,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, nextTick } from 'vue'
+import { ref, nextTick, watch } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useChatStore } from '../store/chatStore'
 import ChatMessageUser from './ChatMessageUser.vue'
@@ -34,6 +34,18 @@ const scrollToBottom = () => {
   })
 }
 
+// 监听消息列表变化，自动滚动到底部
+watch(chatMessages, () => {
+  scrollToBottom()
+}, { deep: true }) // 添加deep选项以监听消息内容的变化
+
+// 监听加载状态变化，当加载完成时滚动到底部
+watch(isLoading, (newValue) => {
+  if (!newValue) {
+    scrollToBottom()
+  }
+})
+
 // 暴露方法给父组件
 defineExpose({
   scrollToBottom
@@ -41,8 +53,5 @@ defineExpose({
 </script>
 
 <style scoped>
-
-
-
 @import '@/styles/ChatMessage.css';
 </style>

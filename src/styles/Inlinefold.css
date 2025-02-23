@@ -1,0 +1,33 @@
+.inline-fold {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    width: 100%;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  
+  .search-box {
+    width: 90%;
+    max-width: 800px;
+    position: relative;
+  }
+  
+  .search-input {
+    width: 100%;
+    padding: 20px 30px;
+    border: 2px solid #dcdfe6;
+    border-radius: 12px;
+    font-size: 18px;
+    background-color: #f5f7fa;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  .search-input:hover {
+    border-color: #409eff;
+    box-shadow: 0 0 8px rgba(64, 158, 255, 0.2);
+  }

@@ -28,25 +28,32 @@
   background-color: #f8f9fa;
   border-radius: 5px;
   margin: 10px 0;
+  position: relative;
 }
 
 .code-header {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
   padding: 5px 10px;
   background-color: #e9ecef;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: 1;
 }
 
 .code-language {
   font-size: 0.9em;
   color: #666;
+  margin-right: auto;
 }
-
 .code-content {
   margin: 0;
   padding: 10px;
+  padding-top: 40px;
   overflow-x: auto;
 }

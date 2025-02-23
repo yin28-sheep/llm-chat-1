@@ -2,6 +2,9 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import type { Message, SessionMessages } from '../types/chatMessages'
 
+// 定义模式类型
+type Mode = 'search' | 'dialog' | 'chat'
+
 // 定义并导出聊天状态管理store
 export const useChatStore = defineStore('chat', () => {
   // 所有会话的消息映射
@@ -12,6 +15,8 @@ export const useChatStore = defineStore('chat', () => {
   const messages = ref<Message[]>([])
   // 加载状态标志
   const isLoading = ref(false)
+  // 当前模式，默认为search
+  const currentMode = ref<Mode>('search')
 
   // 切换会话
   const switchSession = (sessionId: string) => {
@@ -51,13 +56,20 @@ export const useChatStore = defineStore('chat', () => {
     isLoading.value = status
   }
 
+  // 设置当前模式
+  const setMode = (mode: Mode) => {
+    currentMode.value = mode
+  }
+
   return {
     messages,
     isLoading,
     currentSessionId,
+    currentMode,
     addMessage,
     clearMessages,
     setLoading,
-    switchSession
+    switchSession,
+    setMode
   }
 })

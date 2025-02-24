@@ -18,10 +18,10 @@ import { storeToRefs } from 'pinia'
 import InlineFold from './InlineFold.vue'
 import InlineUnfold from './InlineUnfold.vue'
 import Chat from './chat.vue'
-import { useChatStore } from '../store/chatStore'
+import { useCoreStore } from '../store/CoreStore'
 
 // 使用状态管理来控制模式
-const store = useChatStore()
+const store = useCoreStore()
 const { currentMode } = storeToRefs(store)
 
 // 处理展开事件

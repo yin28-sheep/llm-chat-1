@@ -12,29 +12,23 @@
 
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
-import { useChatBottomStore } from '../store/ChatBottomStore'
-import { useChatStore } from '../store/chatStore'
+import { useMessageStore } from '../store/MessageStore'
+import { useSendStore } from '../store/SendStore'
 import ChatBottomln from './ChatBottomln.vue'
 import ChatBottomDate from './ChatBottomDate.vue'
 import ChatBottomSend from './ChatBottomSend.vue'
 
 // 初始化store
-const chatBottomStore = useChatBottomStore()
-const chatStore = useChatStore()
+const messageStore = useMessageStore()
+const sendStore = useSendStore()
 
 // 获取状态和方法
-const { messageRef } = storeToRefs(chatBottomStore)
-const { messages } = storeToRefs(chatStore)
-const { addMessage, setLoading } = chatStore
+const { usageData } = storeToRefs(sendStore)
 
 // 处理发送消息
-const handleSend = () => {
-  chatBottomStore.sendMessage(
-    messages.value,
-    addMessage,
-    setLoading,
-    () => emit('scroll')
-  )
+const handleSend = async () => {
+  await sendStore.sendMessage()
+  emit('scroll')
 }
 
 // 定义组件事件

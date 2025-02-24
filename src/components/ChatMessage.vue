@@ -30,15 +30,15 @@
 <script setup lang="ts">
 import { ref, nextTick, onMounted, watch } from 'vue'
 import { storeToRefs } from 'pinia'
-import { useChatStore } from '../store/chatStore'
+import { useMessageStore } from '../store/MessageStore'
 import CopyButton from './CopyButton.vue'
 import hljs from 'highlight.js'
 import 'highlight.js/styles/github.css'
 
 // 组件状态管理
 const chatLogRef = ref<HTMLElement | null>(null) // 聊天记录容器引用
-const chatStore = useChatStore() // 初始化聊天状态管理store
-const { messages: chatMessages, isLoading } = storeToRefs(chatStore) // 获取聊天消息列表和加载状态
+const messageStore = useMessageStore() // 初始化消息状态管理store
+const { messages: chatMessages, isLoading } = storeToRefs(messageStore) // 获取聊天消息列表和加载状态
 
 // 监听消息列表变化
 watch(chatMessages, () => {

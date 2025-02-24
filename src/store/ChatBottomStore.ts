@@ -1,3 +1,20 @@
+// 主要负责处理处理用户输入和消息发送
+// 它包含以下核心功能：
+// 1. 输入框状态管理：
+// - 管理输入框的文本内容（inputText）
+// - 提供设置和清空输入文本的方法
+// 2. 消息发送处理：
+// - 处理消息的发送逻辑
+// - 创建新会话（如果需要）
+// - 添加用户消息和AI响应
+// - 处理流式响应数据
+// 3. 状态和数据管理：
+// - 管理消息的使用统计数据（如token使用量）
+// - 处理加载状态
+// - 错误处理和提示
+// 4. 与其他store协作：
+// - 与CreateMessageStore协同工作，处理会话的创建
+// - 与ChatStore配合，管理消息的添加和更新
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { sendStreamMessage, processStream, type StreamResponseChunk } from '../services/chat'

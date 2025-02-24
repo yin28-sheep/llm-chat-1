@@ -1,3 +1,4 @@
+// 对话框的删除管理
 import { defineStore } from 'pinia'
 
 // 定义会话编辑相关的store

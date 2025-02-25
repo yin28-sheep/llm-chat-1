@@ -16,10 +16,13 @@
     "vuetify": "^3.7.12"
   },
   "devDependencies": {
+    "@types/vue-markdown": "^2.2.4",
     "@vitejs/plugin-vue": "^5.2.1",
     "@vue/tsconfig": "^0.7.0",
+    "markdown-it": "^14.1.0",
     "typescript": "~5.7.2",
     "vite": "^6.1.0",
-    "vue-tsc": "^2.2.0"
+    "vue-tsc": "^2.2.0",
+    "vue3-markdown-it": "^1.0.10"
   }
 }

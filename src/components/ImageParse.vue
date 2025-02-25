@@ -2,7 +2,7 @@
   <div class="chat-container">
     <!-- 文件上传区域 -->
     <div class="upload-section">
-      <input accept="*/*" type="file" @change="handleFileUpload" />
+      <input accept="*/*" type="file" @change="handleFileUpload"/>
       <button @click="clearChat">清除对话</button>
     </div>
 
@@ -11,11 +11,16 @@
       <div v-for="(msg, index) in chatHistory" :key="index" class="message">
         <div class="role">{{ msg.role === 'user' ? '我' : 'AI' }}</div>
         <div class="content">
-          <template v-if="msg.type === 'text'">{{ msg.content }}</template>
-          <img
-            v-else-if="msg.type === 'image'"
-            :src="msg.content"
-            class="uploaded-image"
+          <template v-if="msg.role === 'user'">
+            <img v-if="msg.type === 'image'" :src="msg.content" class="uploaded-image" />
+            <span v-else>{{ msg.content }}</span>
+          </template>
+
+          <!-- AI回复部分使用Markdown渲染 -->
+          <vue-markdown-it
+              v-if="msg.role === 'assistant'"
+              :source="msg.content"
+              class="markdown-content"
           />
         </div>
       </div>
@@ -26,11 +31,14 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
+import {ref} from 'vue'
+import MarkdownIt from 'vue3-markdown-it'
+// 修改导入方式（原导入语句可能存在问题）
+const VueMarkdownIt = MarkdownIt
 
 type MessageContent =
-  | { type: 'text'; text: string }
-  | { type: 'image_url'; image_url: { url: string } }
+    | { type: 'text'; text: string }
+    | { type: 'image_url'; image_url: { url: string } }
 
 interface ChatMessage {
   role: 'user' | 'assistant'
@@ -123,15 +131,15 @@ const sendMessage = async () => {
     error.value = ''
 
     const response = await fetch(
-      'https://open.bigmodel.cn/api/paas/v4/chat/completions',
-      {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${apiKey.value}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(buildRequestParams()),
-      }
+        'https://open.bigmodel.cn/api/paas/v4/chat/completions',
+        {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${apiKey.value}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(buildRequestParams()),
+        }
     )
 
     if (!response.ok) throw new Error(`请求失败: ${response.status}`)
@@ -144,10 +152,10 @@ const sendMessage = async () => {
     let aiResponse = ''
 
     while (true) {
-      const { done, value } = await reader.read()
+      const {done, value} = await reader.read()
       if (done) break
 
-      buffer += decoder.decode(value, { stream: true })
+      buffer += decoder.decode(value, {stream: true})
       const chunks = buffer.split('\n')
       buffer = chunks.pop() || ''
 
@@ -260,6 +268,27 @@ button:disabled {
 
 .error-message {
   color: #dc3545;
+}
+
+/* 样式部分新增markdown样式... */
+
+.markdown-content {
+  text-align: left;
+}
+
+.markdown-content :deep(h1) {
+  font-size: 1.5em;
+  margin: 0.8em 0;
+}
+
+.markdown-content :deep(ul) {
+  padding-left: 1.2em;
+}
+
+.markdown-content :deep(code) {
+  background-color: #f5f5f5;
+  padding: 2px 4px;
+  border-radius: 3px;
 }
 
 </style>

@@ -10,8 +10,8 @@
     overflow: hidden;
   }
   
-  /* 右侧聊天界面容器样式 */
-  .chat-container {
+  /* 右侧主界面容器样式 */
+  .main-container {
     flex: 1;
     display: flex;
     overflow: hidden;

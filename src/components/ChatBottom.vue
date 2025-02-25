@@ -6,7 +6,6 @@
       <chat-bottomln @send="handleSend" />
       <chat-bottom-send @send="handleSend" />
     </div>
-    <chat-bottom-date :usage-data="messageRef?.usageData" />
   </div>
 </template>
 
@@ -15,7 +14,6 @@ import { storeToRefs } from 'pinia'
 import { useChatBottomStore } from '../store/ChatBottomStore'
 import { useChatStore } from '../store/chatStore'
 import ChatBottomln from './ChatBottomln.vue'
-import ChatBottomDate from './ChatBottomDate.vue'
 import ChatBottomSend from './ChatBottomSend.vue'
 
 // 初始化store

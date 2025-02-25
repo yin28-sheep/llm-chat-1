@@ -11,7 +11,12 @@
       <div class="role">{{ message.role === 'user' ? 'You' : 'AI' }}</div>
       <div class="message-content">
         <template v-for="(part, partIndex) in processMessageContent(message.content)" :key="partIndex">
-          <div v-if="part.type === 'text'" class="text-content">{{ part.content }}</div>
+          <!-- Markdown渲染文本部分 -->
+          <vue-markdown-it
+              v-if="part.type === 'text'"
+              :source="part.content"
+              class="markdown-content"
+          />
           <div v-else-if="part.type === 'code'" class="code-block">
             <div class="code-header">
               <span v-if="part.language" class="code-language">{{ part.language }}</span>
@@ -28,6 +33,7 @@
 </template>
 
 <script setup lang="ts">
+import VueMarkdownIt from 'vue3-markdown-it' // 新增Markdown组件
 import { ref, nextTick, onMounted, watch } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useChatStore } from '../store/chatStore'
@@ -123,4 +129,19 @@ defineExpose({
 
 <style scoped>
 @import '@/styles/ChatMessage.css';
+/* 新增Markdown内容样式 */
+.markdown-content {
+  line-height: 1.6;
+
+  /* 匹配原有文本样式 */
+  font-size: 14px;
+  color: var(--text-primary);
+
+  /* 处理Markdown元素 */
+  :deep(h1) { font-size: 1.5em; margin: 0.8em 0; }
+  :deep(h2) { font-size: 1.3em; margin: 0.6em 0; }
+  :deep(ul) { padding-left: 1.2em; }
+  :deep(li) { margin: 0.4em 0; }
+  :deep(a) { color: var(--link-color); }
+}
 </style>

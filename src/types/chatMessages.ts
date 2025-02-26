@@ -7,11 +7,12 @@ export type MessageRole = 'user' | 'assistant'
 export interface Message {
   role: MessageRole
   content: string
+  sessionId: string  // 消息所属的会话ID
 }
 
 // 聊天会话接口
 export interface ChatSession {
-  id: string      // 会话唯一标识
+  sessionId: string      // 会话唯一标识
   name: string    // 会话名称
   messages: Message[]  // 会话消息列表
 }
@@ -23,6 +24,6 @@ export interface SessionMessages {
 
 // 聊天信息接口
 export interface ChatInfo {
-  id: string
+  sessionId: string
   title: string
 }

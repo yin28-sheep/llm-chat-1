@@ -36,7 +36,7 @@ import { switchToChat, deleteChat, renameChat } from '../utils/ListChatToMitter'
 // 定义组件接收的属性
 interface Props {
   session: {
-    id: string    // 会话ID
+    sessionId: string    // 会话ID
     name: string  // 会话名称
   }
   isActive: boolean  // 是否为当前激活的会话
@@ -68,9 +68,9 @@ const startEditing = () => {
 const handleRename = () => {
   const newName = editingName.value.trim()
   if (newName && newName !== props.session.name) {
-    editStore.renameSession(store.chatSessions, props.session.id, newName)
+    editStore.renameSession(store.chatSessions, props.session.sessionId, newName)
     // 触发重命名事件，通知其他组件更新
-    renameChat(props.session.id, newName)
+    renameChat(props.session.sessionId, newName)
   }
   isEditing.value = false
 }
@@ -79,9 +79,9 @@ const handleRename = () => {
 // 确认后删除会话并通知其他组件
 const handleDelete = () => {
   if (confirm('确定要删除这个会话吗？')) {
-    editStore.deleteSession(store.chatSessions, props.session.id)
+    editStore.deleteSession(store.chatSessions, props.session.sessionId)
     // 触发删除事件，通知其他组件更新
-    deleteChat(props.session.id)
+    deleteChat(props.session.sessionId)
   }
 }
 
@@ -89,10 +89,10 @@ const handleDelete = () => {
 // 切换到选中的会话
 const handleClick = () => {
   if (!isEditing.value) {
-    store.selectSession(props.session.id)
+    store.selectSession(props.session.sessionId)
     // 使用mitt事件总线触发切换会话事件
     switchToChat({
-      id: props.session.id,
+      sessionId: props.session.sessionId,
       title: props.session.name
     })
   }

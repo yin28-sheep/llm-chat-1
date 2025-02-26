@@ -5,9 +5,9 @@
     <!-- 遍历渲染每个会话项，使用v-for动态生成会话列表 -->
     <history-list-chat
       v-for="session in chatSessions"
-      :key="session.id"
+      :key="session.sessionId"
       :session="session"
-      :is-active="currentSessionId === session.id"
+      :is-active="currentSessionId === session.sessionId"
     />
   </div>
 </template>

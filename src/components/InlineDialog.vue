@@ -13,10 +13,10 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue'
 import ChatBottomSend from './ChatBottomSend.vue'
-import { useChatBottomStore } from '../store/ChatBottomStore'
+import { useInputStore } from '../store/InputStore'
 
 // 初始化store
-const chatBottomStore = useChatBottomStore()
+const inputStore = useInputStore()
 
 // 定义事件
 const emit = defineEmits(['send'])
@@ -28,7 +28,7 @@ const hasInput = ref(false)
 // 监听输入内容变化
 watch(inputText, (newValue) => {
   hasInput.value = newValue.trim().length > 0
-  chatBottomStore.setInputText(newValue)
+  inputStore.setInputText(newValue)
 })
 
 // 处理发送消息
@@ -38,7 +38,7 @@ const handleSend = () => {
   
   emit('send', message)
   inputText.value = ''
-  chatBottomStore.setInputText('')
+  inputStore.setInputText('')
 }
 </script>
 

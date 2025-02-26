@@ -30,9 +30,9 @@ const handleScroll = () => {
 }
 
 // 处理会话切换事件
-const handleSwitchChat = (chatInfo: { id: string; title: string }) => {
+const handleSwitchChat = (chatInfo: { sessionId: string; title: string }) => {
   // 切换到新会话并加载对应的消息记录
-  sessionStore.switchSession(chatInfo.id)
+  sessionStore.switchSession(chatInfo.sessionId)
 }
 
 // 处理会话删除事件
@@ -43,7 +43,7 @@ const handleDeleteChat = (sessionId: string) => {
 }
 
 // 处理会话重命名事件
-const handleRenameChat = (info: { id: string; newTitle: string }) => {
+const handleRenameChat = (info: { sessionId: string; newTitle: string }) => {
   // 不再需要更新标题
 }
 

@@ -22,20 +22,18 @@
 </template>
 
 <script setup lang="ts">
-// 定义组件的props和事件
-const props = defineProps<{
-  currentMode: 'search' | 'dialog' | 'chat'
-}>()
+import { storeToRefs } from 'pinia'
+import { useMainStore } from '../store/TopStore'
 
-const emit = defineEmits<{
-  (e: 'toggle-mode', mode: 'search' | 'dialog' | 'chat'): void
-}>()
+// 使用TopStore来管理模式
+const store = useMainStore()
+const { activeMode } = storeToRefs(store)
 
 // 处理模式切换
 const handleModeToggle = () => {
-  // 在search和chat模式之间切换
-  const nextMode = props.currentMode === 'search' ? 'chat' : 'search'
-  emit('toggle-mode', nextMode)
+  // 在search和chat两种模式之间切换
+  const nextMode = activeMode.value === 'search' ? 'chat' : 'search'
+  store.setActiveMode(nextMode)
 }
 </script>
 

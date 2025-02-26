@@ -6,25 +6,24 @@
       <chat-bottomln @send="handleSend" />
       <chat-bottom-send @send="handleSend" />
     </div>
-    <chat-bottom-date :usage-data="messageRef?.usageData" />
+    <chat-bottom-date :usage-data="usageData" />
   </div>
 </template>
 
 <script setup lang="ts">
-import { storeToRefs } from 'pinia'
-import { useMessageStore } from '../store/MessageStore'
 import { useSendStore } from '../store/SendStore'
+import { useMessageStore } from '../store/MessageStore'
 import ChatBottomln from './ChatBottomln.vue'
 import ChatBottomDate from './ChatBottomDate.vue'
 import ChatBottomSend from './ChatBottomSend.vue'
+import { computed } from 'vue'
 
 // 初始化store
-const messageStore = useMessageStore()
 const sendStore = useSendStore()
+const messageStore = useMessageStore()
 
 // 获取状态和方法
-const { usageData } = storeToRefs(sendStore)
-
+const usageData = computed(() => sendStore.usageData)
 // 处理发送消息
 const handleSend = async () => {
   await sendStore.sendMessage()

@@ -17,11 +17,13 @@
 import { ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useCreateMessageStore } from '../store/CreateMessageStore'
+import { useMainStore } from '../store/TopStore'
 import CreateMessageIn from './CreateMessageIn.vue'
 import CreateMessageButton from './CreateMessageButton.vue'
 
 // 组件状态管理
 const store = useCreateMessageStore() // 初始化创建会话状态管理store
+const mainStore = useMainStore() // 初始化主状态管理store
 const { isCreatingNewSession } = storeToRefs(store) // 获取创建状态
 const inputRef = ref() // 输入组件引用
 

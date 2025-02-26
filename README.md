@@ -1,14 +1,59 @@
-# Vue 3 + TypeScript + Vite
+- # 一、项目介绍
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+  本项目是一个基于大语言模型 DeepSeek 和 GLM 的前端 AI 助手应用，旨在通过自然语言处理技术为用户提供智能问答、代码生成、文档检索等功能。
 
-Learn more about the recommended Project Setup and IDE Support in the [Vue Docs TypeScript Guide](https://vuejs.org/guide/typescript/overview.html#project-setup).
+  项目服务地址 - http://localhost:5173/
 
-技术栈
-- Vue 3.5.13
-- TypeScript
-- Vite 6.1.0
-- Pinia 3.0.1
-- Vuetify 3.7.12
-- highlight.js 11.11.1
-- node版本需要大于18
+  项目地址 - https://github.com/Sciencekex/llm-chat
+
+  # 二、项目分工
+
+  > 好的团队协作可以酌情加分哟～请组长和组员做好项目分工与监督。
+
+  | **团队成员** | **主要贡献**                                                 |
+  | ------------ | ------------------------------------------------------------ |
+  | 叶江涛       | 梳理项目开发需求、成员技术能力调查、技术选型。负责 LLM 接口调用、项目整体组件架构。 |
+  | 林伟烽       | 项目功能开发、技术补充、项目整体样式布局。                   |
+  | 李滨         | 项目架构优化、封装工具类。                                   |
+  | 张嘉文       | 文档编写、功能测试                                           |
+
+  # 三、项目实现
+
+  ### 3.1 技术选型与相关开发文档
+
+  #### 技术栈
+
+  - **前端**：  Vue3 + Vite + TypeScript + Pinia +  Axios + Fetch API  。
+  - **LLM 模型**：OpenAI SDK + GLM SDK。
+
+  #### 场景分析
+
+  - **存储需求**：每日新增对话数据约 1 GB，预计存储空间需求为 100 GB / 月。
+  - **服务器需求**：1 台 8 核 16GB 服务器，用于前端服务。
+
+  ### 3.2 架构设计
+
+  项目整体：
+
+  - 除 Web 端外，组件还需兼容 H5 、小程序形态，准备通过整体响应式设计解决。
+  - 提交相关功能演示材料。
+  - 支持内联与独立对话两种功能模式，其中内联形态要求三种形态：收缩形态、展开形态、对话形态。
+
+  用户输入：
+
+  - 上传文件，用户端和 AI 结果都要支持文本、图片、PDF 等多种交流的文件格式。
+  - 根据用户输入（含文件）调用 Coze API 或其他大模型。
+  - 实现回车发送消息，用户输入对话回车后，调用 LLM 接口，组件内流式展示大模型返回的结果。
+
+  AI返回结果：
+
+  - 支持 LLM 流式返回结果，实现逐行打印效果。
+  - 正确展示 文本、Markdown 、图片等 这些 LLM 返回的格式内容。
+  - 返回结果包含代码，提供 `Copy` 按钮，方便用户复制代码。
+
+  LLM 模型选择：
+
+  基于成本经济性、稳定性和响应速度等方面的考量, 在大模型API采用不同平台的方案:
+
+  - 语言交流模型接口调用"讯飞星辰MaaS平台"云部署的DeepSeek-V3模型
+  - 图片文档解析接口调用"智谱AI开放平台"的GLM-4V-Plus-0111模型

@@ -2,6 +2,7 @@
 export interface ChatMessage {
   role: 'system' | 'user' | 'assistant'
   content: string
+  sessionId: string  // 消息所属的会话ID
 }
 
 // 流式响应数据块类型定义

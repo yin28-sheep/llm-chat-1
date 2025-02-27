@@ -15,17 +15,17 @@
 
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
-import { useChatBottomStore } from '../store/ChatBottomStore'
-import { useChatStore } from '../store/chatStore'
+import { useInputStore } from '../store/InputStore'
+import { useMessageStore } from '../store/MessageStore'
 import { ref, onMounted, nextTick } from 'vue'
 
 // 初始化store
-const chatBottomStore = useChatBottomStore()
-const chatStore = useChatStore()
+const inputStore = useInputStore()
+const messageStore = useMessageStore()
 
 // 获取状态
-const { inputText } = storeToRefs(chatBottomStore)
-const { isLoading } = storeToRefs(chatStore)
+const { inputText } = storeToRefs(inputStore)
+const { isLoading } = storeToRefs(messageStore)
 
 // 定义事件
 const emit = defineEmits(['send'])
@@ -57,7 +57,7 @@ const handleEnter = () => {
   if (!message || isLoading.value) return
   
   emit('send')
-  chatBottomStore.clearInputText()
+  inputStore.clearInputText()
   // 重置输入框高度
   if (textareaRef.value) {
     textareaRef.value.style.height = '24px'

@@ -4,15 +4,15 @@
 
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
-import { useChatStore } from '../store/chatStore'
-import { useChatBottomStore } from '../store/ChatBottomStore'
+import { useMessageStore } from '../store/MessageStore'
+import { useInputStore } from '../store/InputStore'
 import { ref, watch } from 'vue'
 
 // 组件状态管理
-const chatStore = useChatStore() // 初始化聊天状态管理store
-const chatBottomStore = useChatBottomStore() // 初始化输入状态管理store
-const { isLoading } = storeToRefs(chatStore) // 获取加载状态
-const { inputText } = storeToRefs(chatBottomStore) // 获取输入内容
+const messageStore = useMessageStore() // 初始化消息状态管理store
+const inputStore = useInputStore() // 初始化输入状态管理store
+const { isLoading } = storeToRefs(messageStore) // 获取加载状态
+const { inputText } = storeToRefs(inputStore) // 获取输入内容
 const hasInput = ref(false) // 是否有输入内容
 
 // 监听输入内容变化

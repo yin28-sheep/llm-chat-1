@@ -6,14 +6,11 @@
         <button class="close-btn" @click="handleClose">×</button>
       </div>
       <div class="dialog-content">
-        <div class="input-area">
-          <input
-            v-model="inputText"
-            class="message-input"
-            placeholder="请输入内容..."
-            @keyup.enter="handleSend"
-          />
-          <button class="send-btn" @click="handleSend">发送</button>
+        <div class="input-section">
+          <inline-dialog @send="handleSend" />
+        </div>
+        <div class="message-section">
+          <inline-message v-if="currentMessage" :message="currentMessage" :role="currentMessage.role" />
         </div>
       </div>
     </div>
@@ -22,40 +19,22 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useChatStore } from '../store/chatStore'
-import { useChatBottomStore } from '../store/ChatBottomStore'
+import InlineDialog from './InlineDialog.vue'
+import InlineMessage from './InlineMessage.vue'
 
 // 定义事件
 const emit = defineEmits(['close', 'send'])
 
-// 输入消息状态
-const chatStore = useChatStore()
-const inputText = ref('')
+// 当前消息状态
+const currentMessage = ref<{ role: string; content: string } | null>(null)
 
 // 处理发送消息
-const handleSend = async () => {
-  const message = inputText.value.trim()
-  if (!message) return
-
-  // 使用ChatBottomStore处理消息发送
-  const chatBottomStore = useChatBottomStore()
-  chatBottomStore.setInputText(message)
-  
-  // 先切换到chat模式并清空输入
-  chatStore.setMode('chat')
-  inputText.value = ''
-  
-  try {
-    // 异步处理消息发送
-    await chatBottomStore.sendMessage(
-      chatStore.messages,
-      chatStore.addMessage,
-      chatStore.setLoading,
-      () => {}
-    )
-  } catch (error) {
-    console.error('发送消息失败:', error)
+const handleSend = (message: string) => {
+  currentMessage.value = {
+    role: 'user',
+    content: message
   }
+  emit('send', message)
 }
 
 // 处理关闭对话框

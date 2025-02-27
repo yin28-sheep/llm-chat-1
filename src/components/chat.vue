@@ -15,11 +15,12 @@ import { ref, onMounted, onUnmounted } from 'vue'
 import ChatMessage from './ChatMessage.vue'
 import ChatBottom from './ChatBottom.vue'
 import { onSwitchChat, onDeleteChat, onRenameChat, removeListener } from '../utils/ListChatToMitter'
-import { useChatStore } from '../store/chatStore'
-import ImageParse from './ImageParse.vue'
+import { useSessionStore } from '../store/SessionStore'
+import { useMessageStore } from '../store/MessageStore'
 
-// 初始化聊天状态管理
-const chatStore = useChatStore()
+// 初始化会话和消息状态管理
+const sessionStore = useSessionStore()
+const messageStore = useMessageStore()
 
 // 组件引用：用于控制消息列表滚动
 const messageRef = ref<{ scrollToBottom: () => void } | null>(null)
@@ -30,20 +31,20 @@ const handleScroll = () => {
 }
 
 // 处理会话切换事件
-const handleSwitchChat = (chatInfo: { id: string; title: string }) => {
+const handleSwitchChat = (chatInfo: { sessionId: string; title: string }) => {
   // 切换到新会话并加载对应的消息记录
-  chatStore.switchSession(chatInfo.id)
+  sessionStore.switchSession(chatInfo.sessionId)
 }
 
 // 处理会话删除事件
 const handleDeleteChat = (sessionId: string) => {
-  if (sessionId === chatStore.currentSessionId) {
-    chatStore.clearMessages()
+  if (sessionId === sessionStore.currentSessionId) {
+    messageStore.clearMessages()
   }
 }
 
 // 处理会话重命名事件
-const handleRenameChat = (info: { id: string; newTitle: string }) => {
+const handleRenameChat = (info: { sessionId: string; newTitle: string }) => {
   // 不再需要更新标题
 }
 

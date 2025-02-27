@@ -2,54 +2,42 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { switchToChat } from '../utils/ListChatToMitter'
-import type { ChatSession } from '../types/chatMessages'
+import { useMainStore } from './TopStore'
+import { useSessionStore } from './SessionStore'
 
 // 创建并导出会话管理store
 export const useCreateMessageStore = defineStore('createMessage', () => {
   // 状态定义
-  const chatSessions = ref<ChatSession[]>([])  // 所有聊天会话列表
-  const currentSessionId = ref<string | null>(null)  // 当前选中的会话ID
   const isCreatingNewSession = ref(false)  // 是否正在创建新会话
+  const mainStore = useMainStore()  // 引入TopStore
+  const sessionStore = useSessionStore()  // 引入SessionStore
 
   // 创建新会话
-  const createNewSession = (name: string) => {
-    const newSession: ChatSession = {
-      id: Date.now().toString(),  // 使用时间戳作为会话ID
-      name,
-      messages: []
+  function createNewSession(name: string) {
+    const sessionId = Date.now().toString()  // 使用时间戳作为会话ID
+    mainStore.addSessionId(sessionId)  // 添加新会话ID到TopStore
+    mainStore.setCurrentSessionId(sessionId)  // 设置当前会话ID
+    if (!mainStore.sessionMessages[sessionId]) {
+      mainStore.sessionMessages[sessionId] = []
     }
-    chatSessions.value.push(newSession)
-    currentSessionId.value = newSession.id
+    sessionStore.setSessionName(sessionId, name)  // 使用SessionStore存储会话名称
     isCreatingNewSession.value = false
     // 自动触发切换会话事件
     switchToChat({
-      id: newSession.id,
-      title: newSession.name
+      sessionId,
+      title: name
     })
   }
+
   // 设置创建会话状态
   const setCreatingNewSession = (status: boolean) => {
     isCreatingNewSession.value = status
   }
 
-  // 选择会话
-  const selectSession = (sessionId: string) => {
-    currentSessionId.value = sessionId
-  }
-
-  // 获取当前选中的会话
-  const getCurrentSession = () => {
-    return chatSessions.value.find(session => session.id === currentSessionId.value)
-  }
-
   // 导出状态和方法
   return {
-    chatSessions,
-    currentSessionId,
     isCreatingNewSession,
     createNewSession,
     setCreatingNewSession,
-    selectSession,
-    getCurrentSession,
   }
 })

@@ -7,7 +7,7 @@
 // 4. 处理消息的添加和清空操作，确保消息状态的正确维护
 
 import { defineStore } from 'pinia'
-import { computed } from 'vue'
+import { computed,ref } from 'vue'
 import { useMainStore } from './TopStore'
 import type { Message} from '../types/chatMessages'
 import { useCreateMessageStore } from './CreateMessageStore'
@@ -17,13 +17,25 @@ export const useSessionStore = defineStore('session', () => {
   // 从TopStore获取实例
   const mainStore = useMainStore()
 
+  const isCreatingNewSession = ref(false)  // 是否正在创建新会话
+  const sessionNames = ref<{ [key: string]: string }>({})  // 存储会话名称
+
   // 切换会话
   // @param sessionId - 目标会话的唯一标识符
   const switchSession = (sessionId: string) => {
     mainStore.setCurrentSessionId(sessionId)
   }
 
-  // 获取当前会话的消息列表
+    // 获取所有会话列表
+    const chatSessions = computed(() => {
+      return mainStore.sessionIds.map(id => ({
+        sessionId: id,
+        name: sessionNames.value[id] || mainStore.sessionMessages[id]?.[0]?.content || id,
+        messages: mainStore.sessionMessages[id] || []
+      }))
+    })
+
+  // 获取当前会话的消息
   // 返回一个计算属性，自动根据currentSessionId的变化更新消息列表
   const getCurrentSessionMessages = computed(() => {
     if (!mainStore.currentSessionId) {
@@ -51,8 +63,50 @@ export const useSessionStore = defineStore('session', () => {
   // 获取会话名称
   // @param sessionId - 会话的唯一标识符
   const getSessionName = (sessionId: string) => {
-    const createMessageStore = useCreateMessageStore()
-    return createMessageStore.chatSessions.find(session => session.sessionId === sessionId)?.name || ''
+    return sessionNames.value[sessionId] || mainStore.sessionMessages[sessionId]?.[0]?.content || sessionId
+  }
+  
+    // 选择会话
+    const selectSession = (sessionId: string) => {
+      if (mainStore.hasSessionId(sessionId)) {
+        mainStore.setCurrentSessionId(sessionId)
+      }
+    }
+  
+    // 获取当前选中的会话
+    const getCurrentSession = () => {
+      if (!mainStore.currentSessionId) return null
+      const messages = mainStore.sessionMessages[mainStore.currentSessionId] || []
+      return {
+        sessionId: mainStore.currentSessionId,
+        name: messages[0]?.content || mainStore.currentSessionId,
+        messages
+      }
+    }
+
+  // 设置会话名称
+  // @param sessionId - 会话的唯一标识符
+  // @param name - 要设置的会话名称
+  const setSessionName = (sessionId: string, name: string) => {
+    sessionNames.value[sessionId] = name
+  }
+
+  function renameSession(sessions: { sessionId: string; name: string }[], sessionId: string, newName: string) {
+    const session = sessions.find((s) => s.sessionId === sessionId);
+    console.log('Session found:', session); // 添加日志输出
+  
+    if (session) {
+      session.name = newName;
+      sessionNames.value[sessionId] = newName;
+      if (mainStore.sessionMessages[sessionId]) {
+        mainStore.sessionMessages[sessionId] = mainStore.sessionMessages[sessionId].map((msg) => ({
+          ...msg,
+          sessionName: newName,
+        }));
+      }
+    } else {
+      console.error(`Session with ID ${sessionId} not found`);
+    }
   }
 
   return {
@@ -61,6 +115,11 @@ export const useSessionStore = defineStore('session', () => {
     switchSession,
     addMessageToSession,
     clearSessionMessages,
-    getSessionName
+    getSessionName,
+    chatSessions,
+    selectSession,
+    getCurrentSession,
+    setSessionName,
+    renameSession
   }
 })

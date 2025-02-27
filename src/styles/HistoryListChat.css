@@ -11,9 +11,8 @@
   .history-item:hover {
     background-color: #f8f8f8;
   }
-  
   .history-item.active {
-    background-color: #8aafd0;
+    background-color: #e8f4ff;
   }
   
   .message-preview {

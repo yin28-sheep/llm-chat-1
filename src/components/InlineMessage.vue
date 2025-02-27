@@ -21,16 +21,5 @@ const props = defineProps<{
 </script>
 
 <style scoped>
-.inline-message {
-  width: 100%;
-  height: 100%;
-  overflow-y: auto;
-}
-
-.chat-log {
-  padding: 15px;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
+@import'@/styles/InlineMessage.css'
 </style>

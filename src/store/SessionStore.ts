@@ -10,7 +10,6 @@ import { defineStore } from 'pinia'
 import { computed,ref } from 'vue'
 import { useMainStore } from './TopStore'
 import type { Message} from '../types/chatMessages'
-import { useCreateMessageStore } from './CreateMessageStore'
 
 // 定义并导出会话管理store
 export const useSessionStore = defineStore('session', () => {

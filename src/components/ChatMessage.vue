@@ -34,7 +34,7 @@ const mainStore = useMainStore(); // 初始化主store
 const sessionStore = useSessionStore(); // 初始化会话状态管理store
 
 // 获取加载状态
-const isLoading = ref(messageStore.isLoading);
+const isLoading = computed(() => messageStore.isLoading);
 
 // 获取当前会话名称
 const currentSessionName = computed(() => {
@@ -56,10 +56,12 @@ const messages = computed(() => {
   return mainStore.sessionMessages[currentSessionId];
 });
 
-// 监听消息列表变化
-watch(() => messages.value, () => {
-  scrollToBottom();
-});
+// 监听消息列表变化和加载状态变化
+watch([() => messages.value, isLoading, () => messageStore.streamContent], ([newMessages, loading, streamContent]) => {
+  if (!loading || streamContent) {
+    scrollToBottom();
+  }
+}, { deep: true });
 
 // 组件挂载时滚动到底部
 onMounted(() => {

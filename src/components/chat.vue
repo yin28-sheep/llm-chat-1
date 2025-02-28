@@ -5,7 +5,7 @@
     <!-- 聊天消息组件：用于显示消息历史记录 -->
     <chat-message ref="messageRef" />
     <!-- 底部输入组件：用于用户输入和发送消息 -->
-    <chat-bottom @scroll="handleScroll" />
+    <chat-bottom />
     <ImageParse />
   </div>
 </template>
@@ -24,11 +24,6 @@ const messageStore = useMessageStore()
 
 // 组件引用：用于控制消息列表滚动
 const messageRef = ref<{ scrollToBottom: () => void } | null>(null)
-
-// 处理滚动事件：当新消息发送或接收时，滚动到底部
-const handleScroll = () => {
-  messageRef.value?.scrollToBottom()
-}
 
 // 处理会话切换事件
 const handleSwitchChat = (chatInfo: { sessionId: string; title: string }) => {

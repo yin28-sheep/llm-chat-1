@@ -8,20 +8,6 @@ export const useEditMessageStore = defineStore('editMessage', () => {
   const mainStore = useMainStore()  // 引入TopStore
   const sessionStore = useSessionStore()  // 引入SessionStore
 
-  // 重命名会话
-  const renameSession = (sessions: any[], sessionId: string, newName: string) => {
-    const session = sessions.find(s => s.sessionId === sessionId)
-    if (session) {
-      session.name = newName
-      // 同步更新SessionStore中的会话名称
-      if (mainStore.sessionMessages[sessionId]) {
-        mainStore.sessionMessages[sessionId] = mainStore.sessionMessages[sessionId].map(msg => ({
-          ...msg,
-          sessionName: newName
-        }))
-      }
-    }
-  }
 
   // 删除会话
   const deleteSession = (sessions: any[], sessionId: string) => {
@@ -45,7 +31,6 @@ export const useEditMessageStore = defineStore('editMessage', () => {
   }
 
   return {
-    renameSession,
     deleteSession
   }
 })

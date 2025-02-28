@@ -1,7 +1,7 @@
 <template>
   <div class="message-bubble user-message">
     <div class="role">You</div>
-    <div class="message-content">
+    <div class="message-content text-content">
       {{ message.content }}
     </div>
   </div>

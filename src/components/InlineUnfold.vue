@@ -9,7 +9,7 @@
         <div class="input-section">
           <inline-dialog @send="handleSend" />
         </div>
-        <div class="message-section" ref="messageContainer">
+        <div ref="messageContainer" class="message-section">
           <inline-message :messages="currentSessionMessages" />
         </div>
       </div>

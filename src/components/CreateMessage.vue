@@ -2,12 +2,12 @@
 <template>
   <div class="create-message">
     <!-- 新建会话按钮，仅在非创建状态显示 -->
-    <button class="create-button" @click="handleCreateClick" v-if="!isCreatingNewSession">
+    <button v-if="!isCreatingNewSession" class="create-button" @click="handleCreateClick">
       <span class="plus-icon">+</span>
       <span>新建会话</span>
     </button>
     <!-- 会话名称输入组件，仅在创建状态显示 -->
-    <create-message-in ref="inputRef" v-if="isCreatingNewSession" />
+    <create-message-in v-if="isCreatingNewSession" ref="inputRef" />
     <!-- 确认按钮组件，仅在创建状态显示 -->
     <create-message-button v-if="isCreatingNewSession" :onConfirm="handleConfirmSession" />
   </div>
@@ -17,13 +17,11 @@
 import { ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useCreateMessageStore } from '../store/CreateMessageStore'
-import { useMainStore } from '../store/TopStore'
 import CreateMessageIn from './CreateMessageIn.vue'
 import CreateMessageButton from './CreateMessageButton.vue'
 
 // 组件状态管理
 const store = useCreateMessageStore() // 初始化创建会话状态管理store
-const mainStore = useMainStore() // 初始化主状态管理store
 const { isCreatingNewSession } = storeToRefs(store) // 获取创建状态
 const inputRef = ref() // 输入组件引用
 

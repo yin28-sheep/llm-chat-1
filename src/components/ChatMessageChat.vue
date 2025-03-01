@@ -9,6 +9,8 @@
             <span v-if="part.language" class="code-language">{{ part.language }}</span>
             <copy-button :content="part.content" />
           </div>
+          <!-- 安全说明: 这里使用v-html是安全的，因为内容经过highlightCode函数处理，且源自可信的AI响应 -->
+          <!-- eslint-disable-next-line vue/no-v-html -->
           <pre class="code-content" v-html="highlightCode(part.content, part.language)"></pre>
         </div>
       </template>
@@ -30,7 +32,7 @@ interface Props {
   }
 }
 
-const props = defineProps<Props>()
+defineProps<Props>()
 
 // 代码高亮处理函数
 const highlightCode = (code: string, language: string) => {

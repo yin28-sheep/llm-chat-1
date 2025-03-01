@@ -13,11 +13,11 @@
     <div class="input-area">
       <input
         v-model="inputMessage"
-        @keyup.enter="sendMessage"
         placeholder="输入消息..."
         :disabled="isLoading"
+        @keyup.enter="sendMessage"
       />
-      <button @click="sendMessage" :disabled="isLoading">发送</button>
+      <button :disabled="isLoading" @click="sendMessage">发送</button>
     </div>
 
     <!-- 状态信息 -->

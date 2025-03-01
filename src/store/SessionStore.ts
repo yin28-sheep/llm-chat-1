@@ -16,7 +16,6 @@ export const useSessionStore = defineStore('session', () => {
   // 从TopStore获取实例
   const mainStore = useMainStore()
 
-  const isCreatingNewSession = ref(false)  // 是否正在创建新会话
   const sessionNames = ref<{ [key: string]: string }>({})  // 存储会话名称
 
   // 切换会话

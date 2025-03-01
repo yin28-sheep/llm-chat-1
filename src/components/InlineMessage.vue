@@ -13,7 +13,7 @@
 import ChatMessageUser from './ChatMessageUser.vue';
 import ChatMessageChat from './ChatMessageChat.vue';
 
-const props = defineProps<{
+defineProps<{
   messages: Array<{
     role: string;
     content: string;

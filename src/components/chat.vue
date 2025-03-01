@@ -39,8 +39,10 @@ const handleDeleteChat = (sessionId: string) => {
 }
 
 // 处理会话重命名事件
-const handleRenameChat = (info: { sessionId: string; newTitle: string }) => {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const handleRenameChat = (_chatInfo: { sessionId: string; newTitle: string }) => {
   // 不再需要更新标题
+  // 使用下划线前缀表示有意不使用的参数
 }
 
 // 组件挂载时添加事件监听

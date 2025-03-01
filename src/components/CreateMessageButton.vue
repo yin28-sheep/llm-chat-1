@@ -1,7 +1,7 @@
 // 新建会话确认按钮组件：负责确认创建新会话的操作
 <template>
   <!-- 确认按钮容器，仅在创建新会话状态显示 -->
-  <div class="create-message-button" v-if="isCreatingNewSession">
+  <div v-if="isCreatingNewSession" class="create-message-button">
     <!-- 确认按钮：点击时触发确认创建事件 -->
     <button class="confirm-button" @click="handleConfirm">
       <span>确认</span>

@@ -1,5 +1,5 @@
 <template>
-  <button class="copy-button" @click="copyContent" :class="{ 'copied': isCopied }">
+  <button class="copy-button" :class="{ 'copied': isCopied }" @click="copyContent">
     <span class="copy-icon">📋</span>
     {{ buttonText }}
   </button>

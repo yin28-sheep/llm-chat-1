@@ -4,8 +4,8 @@
       v-model="inputStore.inputText"
       class="message-input"
       placeholder="请输入内容..."
-      @keyup.enter="handleSend"
       :disabled="messageStore.isLoading"
+      @keyup.enter="handleSend"
     />
     <chat-bottom-send @send="handleSend" />
   </div>
@@ -14,12 +14,10 @@
 <script setup lang="ts">
 import ChatBottomSend from './ChatBottomSend.vue'
 import { useInputStore } from '../store/InputStore'
-import { useSendStore } from '../store/SendStore'
 import { useMessageStore } from '../store/MessageStore'
 
 // 初始化store
 const inputStore = useInputStore()
-const sendStore = useSendStore()
 const messageStore = useMessageStore()
 
 // 定义事件

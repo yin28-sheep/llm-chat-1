@@ -1,7 +1,7 @@
 // 新建会话输入组件：负责会话名称的输入和创建功能
 <template>
   <!-- 会话名称输入容器，仅在创建新会话状态显示 -->
-  <div class="create-message-input" v-if="isCreatingNewSession">
+  <div v-if="isCreatingNewSession" class="create-message-input">
     <!-- 会话名称输入框：用于输入新会话的名称 -->
     <input
       v-model="sessionName"

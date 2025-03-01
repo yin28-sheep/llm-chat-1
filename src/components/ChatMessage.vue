@@ -1,9 +1,9 @@
 <template>
   <div class="chat-container">
-    <div class="chat-header" v-if="showTitle">
+    <div v-if="showTitle" class="chat-header">
       <h2 class="session-title">{{ currentSessionName }}</h2>
     </div>
-    <div class="chat-log" ref="chatLogRef">
+    <div ref="chatLogRef" class="chat-log">
       <template v-for="(message, index) in messages" :key="index">
         <chat-message-user
           v-if="message.role === 'user'"
@@ -55,9 +55,9 @@ const messages = computed(() => {
   }
   return mainStore.sessionMessages[currentSessionId];
 });
-
 // 监听消息列表变化和加载状态变化
-watch([() => messages.value, isLoading, () => messageStore.streamContent], ([newMessages, loading, streamContent]) => {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+watch([() => messages.value, isLoading, () => messageStore.streamContent], ([_messagesVal, loading, streamContent]) => {
   if (!loading || streamContent) {
     scrollToBottom();
   }

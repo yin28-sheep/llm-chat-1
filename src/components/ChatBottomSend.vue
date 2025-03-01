@@ -1,5 +1,5 @@
 <template>
-  <button class="send-button" @click="handleSend" :disabled="isLoading || !hasInput">发送</button>
+  <button class="send-button" :disabled="isLoading || !hasInput" @click="handleSend">发送</button>
 </template>
 
 <script setup lang="ts">

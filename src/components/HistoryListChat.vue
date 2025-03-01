@@ -8,15 +8,15 @@
     <!-- 会话名称编辑输入框，仅在编辑状态显示 -->
     <input
       v-else
+      ref="inputRef"
       v-model="editingName"
       class="edit-input"
       @keyup.enter="handleRename"
       @blur="handleRename"
-      ref="inputRef"
     />
     
     <!-- 操作按钮区域：重命名和删除 -->
-    <div class="actions" v-show="!isEditing">
+    <div v-show="!isEditing" class="actions">
       <button class="action-btn" @click.stop="startEditing">
         <span>重命名</span>
       </button>

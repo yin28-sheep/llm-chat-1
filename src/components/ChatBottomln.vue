@@ -1,14 +1,14 @@
 <template>
   <div class="input-container">
     <textarea
+      ref="textareaRef"
       v-model="inputStore.inputText"
       class="input"
       :class="{ 'overflow-scroll': hasOverflow }"
       placeholder="请输入内容..."
+      :disabled="messageStore.isLoading"
       @keyup.enter="handleEnter"
       @input="adjustHeight"
-      :disabled="messageStore.isLoading"
-      ref="textareaRef"
     ></textarea>
   </div>
 </template>

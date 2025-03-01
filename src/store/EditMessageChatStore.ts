@@ -10,7 +10,7 @@ export const useEditMessageStore = defineStore('editMessage', () => {
 
 
   // 删除会话
-  const deleteSession = (sessions: any[], sessionId: string) => {
+  const deleteSession = (sessions: {sessionId: string}[], sessionId: string) => {
     const index = sessions.findIndex(s => s.sessionId === sessionId)
     if (index !== -1) {
       sessions.splice(index, 1)

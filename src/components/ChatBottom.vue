@@ -12,14 +12,12 @@
 
 <script setup lang="ts">
 import { useSendStore } from '../store/SendStore'
-import { useMessageStore } from '../store/MessageStore'
 import ChatBottomln from './ChatBottomln.vue'
 import ChatBottomSend from './ChatBottomSend.vue'
 import { computed } from 'vue'
 
 // 初始化store
 const sendStore = useSendStore()
-const messageStore = useMessageStore()
 
 // 获取状态和方法
 const usageData = computed(() => sendStore.usageData)

@@ -26,6 +26,8 @@ import { useMainStore } from '../store/TopStore';
 import { useSessionStore } from '../store/SessionStore';
 import ChatMessageUser from './ChatMessageUser.vue';
 import ChatMessageChat from './ChatMessageChat.vue';
+// 导入Markdown相关组件
+import 'highlight.js/styles/github.css';
 
 // 组件状态管理
 const chatLogRef = ref<HTMLElement | null>(null); // 聊天记录容器引用
@@ -77,8 +79,6 @@ const scrollToBottom = () => {
   });
 };
 
-
-
 // 暴露滚动方法给父组件
 defineExpose({
   scrollToBottom
@@ -87,7 +87,7 @@ defineExpose({
 
 <style scoped>
 @import '@/styles/ChatMessage.css';
-/* 新增Markdown内容样式 */
+/* Markdown内容样式 */
 .markdown-content {
   line-height: 1.6;
 

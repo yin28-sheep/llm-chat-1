@@ -17,6 +17,8 @@ import ChatBottom from './ChatBottom.vue'
 import { onSwitchChat, onDeleteChat, onRenameChat, removeListener } from '../utils/ListChatToMitter'
 import { useSessionStore } from '../store/SessionStore'
 import { useMessageStore } from '../store/MessageStore'
+import ImageParse from "../components/ImageParse.vue";
+
 
 // 初始化会话和消息状态管理
 const sessionStore = useSessionStore()

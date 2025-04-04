@@ -4,14 +4,16 @@
 >
 >
 >
->  ### 项目服务地址 - 
+> ### 依赖安装（使用之前必看）：
+> 为实现项目核心功能和与大预言模型通信，保障项目兼容性和性能，遵循项目架构设计，来确保llm-chat-1项目能够正常运行，我们需要安装相关依赖，相关依赖版本请参阅文件根目录下的package.json文件，下面是安装依赖的具体步骤：
 > 框架准备：在执行命令行之前，请提前安装Node.js框架。
 > 
-> http://localhost:5173/
-> 1. 将项目克隆到本地：打开终端，运行git clone https://github.com/yin28-sheep/llm-chat-1导航到项目文件：cd llm-chat-1
-> 2. 安装依赖：运行npm install
-> 3. 启动开发服务器：npm run dev
-> 4. 运行程序：打开项目服务地址https://github.com/yin28-sheep/llm-chat-1
+>       http://localhost:5173/
+> 1. **将项目克隆到本地：** 打开终端，运行git clone https://github.com/yin28-sheep/llm-chat-1
+> 2. 导航到项目文件：cd llm-chat-1
+> 3. **安装依赖：** 运行npm install
+> 4. **启动开发服务器：** npm run dev
+> 5. **运行程序：** 打开项目服务地址https://github.com/yin28-sheep/llm-chat-1
 >
 >   ### 项目汇报文档 - https://hcnjokfveaon.feishu.cn/docx/K2tld7LkKoxj40xv78ecXAqhnBc?from=auth_notice&hash=620d9804d596969d1e57952bea40c487
 >

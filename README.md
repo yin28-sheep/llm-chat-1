@@ -9,9 +9,9 @@
 > 
 > http://localhost:5173/
 > 1. 将项目克隆到本地：打开终端，运行git clone https://github.com/yin28-sheep/llm-chat-1导航到项目文件：cd llm-chat-1
-2. 安装依赖：运行npm install
-3. 启动开发服务器：npm run dev
-4. 运行程序：打开项目服务地址https://github.com/yin28-sheep/llm-chat-1
+> 2. 安装依赖：运行npm install
+> 3. 启动开发服务器：npm run dev
+> 4. 运行程序：打开项目服务地址https://github.com/yin28-sheep/llm-chat-1
 >
 >   ### 项目汇报文档 - https://hcnjokfveaon.feishu.cn/docx/K2tld7LkKoxj40xv78ecXAqhnBc?from=auth_notice&hash=620d9804d596969d1e57952bea40c487
 >

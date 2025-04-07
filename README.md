@@ -15,7 +15,6 @@
 > 4. **启动开发服务器：** npm run dev
 > 5. **运行程序：** 打开项目服务地址https://github.com/yin28-sheep/llm-chat-1
 >
->   ### 项目汇报文档 - https://hcnjokfveaon.feishu.cn/docx/K2tld7LkKoxj40xv78ecXAqhnBc?from=auth_notice&hash=620d9804d596969d1e57952bea40c487
 >
 >   ### 项目地址 - https://github.com/yin28-sheep/llm-chat-1
 
